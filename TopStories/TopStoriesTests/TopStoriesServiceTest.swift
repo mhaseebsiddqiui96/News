@@ -90,6 +90,21 @@ class TopStoriesServiceTest: XCTestCase {
         }
     }
     
+    func test_fetch_deliversListOfStoriesOn200StatusCodeWithValidJSON() throws {
+        let (client, sut) = makeSUT()
+        
+        let model1 = StoryItem(id: UUID(), section: "Home", subsection: "Home-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType1", updatedDateString: nil, createdDateString: nil, publishedDateString: nil, materialTypeFacet: nil, kicker: nil, desFacet: nil, orgFacet: [], perFacet: [], geoFacet: [], multimedia: [], shortURL: nil)
+        let model1JSON = model1.makeJSON()
+        
+        let model2 = StoryItem(id: UUID(), section: "News", subsection: "News-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType2", updatedDateString: nil, createdDateString: nil, publishedDateString: nil, materialTypeFacet: nil, kicker: nil, desFacet: nil, orgFacet: [], perFacet: [], geoFacet: [], multimedia: [], shortURL: nil)
+        let model2JSON = model2.makeJSON()
+        
+        expect(sut, toCompleteWith: .success([model1, model2])) {
+            let json = ["results": [model1JSON, model2JSON]]
+            let validResultListJSON = try! JSONSerialization.data(withJSONObject: json)
+            client.success(with: 200, and: validResultListJSON)
+        }
+    }
     
     
     // MARK: - Helpers
@@ -157,6 +172,20 @@ class TopStoriesServiceTest: XCTestCase {
         
         XCTAssertEqual(receivedResult, [result], file: file, line: line)
     }
- 
-    
+     
+}
+
+extension StoryItem {
+    // any increase them in future
+    func makeJSON() -> [String: Any] {
+        let codingKeys = TopStoriesServiceResponse.Results.CodingKeys.self
+        let dict = [
+            "id": self.id.uuidString,
+            codingKeys.section.rawValue: self.section,
+            codingKeys.title.rawValue: self.title,
+            codingKeys.short_url.rawValue: self.shortURL,
+            codingKeys.item_type.rawValue: self.itemType
+        ].compactMapValues({$0})
+        return dict
+    }
 }

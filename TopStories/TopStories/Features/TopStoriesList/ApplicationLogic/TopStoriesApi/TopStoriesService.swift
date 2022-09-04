@@ -7,13 +7,6 @@
 
 import Foundation
 
-typealias HTTPClientResult = Result<(data: Data, response: HTTPURLResponse), Error>
-
-protocol HTTPClient {
-    
-    func perform(urlRequest: URLRequest, completion: @escaping(HTTPClientResult) -> Void)
-}
-
 class TopStoriesService {
   
     private let client: HTTPClient
@@ -34,8 +27,8 @@ class TopStoriesService {
             switch response {
                 
             case .success(let result):
-                if let _ = try?  JSONSerialization.jsonObject(with: result.data) {
-                    completion(.success([]))
+                if  let apiResponse = try? JSONDecoder().decode(TopStoriesServiceResponse.self, from: result.data) {
+                    completion(.success(apiResponse.results?.map({$0.storyItem}) ?? []))
                 } else {
                     completion(.failure(.invalidData))
                 }

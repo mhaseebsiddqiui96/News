@@ -18,17 +18,17 @@ struct StoryItem: Equatable {
     let uri : String?
     let byline : String?
     let itemType : String?
-    let updatedDate : Date?
-    let createdDate : Date?
-    let publishedDate : Date?
+    let updatedDateString : String?
+    let createdDateString : String?
+    let publishedDateString : String?
     let materialTypeFacet : String?
     let kicker : String?
-    let des_facet : [String]?
-    let org_facet : [String]?
-    let per_facet : [String]?
-    let geo_facet : [String]?
+    let desFacet : [String]?
+    let orgFacet : [String]?
+    let perFacet : [String]?
+    let geoFacet : [String]?
     let multimedia : [Multimedia]?
-    let short_url : String?
+    let shortURL : String?
 
     
     
