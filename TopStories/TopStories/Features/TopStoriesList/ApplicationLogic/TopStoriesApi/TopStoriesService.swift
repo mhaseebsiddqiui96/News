@@ -27,7 +27,7 @@ class TopStoriesService {
             switch response {
                 
             case .success(let result):
-                if  let apiResponse = try? JSONDecoder().decode(TopStoriesServiceResponse.self, from: result.data) {
+                if result.response.statusCode == 200, let apiResponse = try? JSONDecoder().decode(TopStoriesServiceResponse.self, from: result.data) {
                     completion(.success(apiResponse.results?.map({$0.storyItem}) ?? []))
                 } else {
                     completion(.failure(.invalidData))

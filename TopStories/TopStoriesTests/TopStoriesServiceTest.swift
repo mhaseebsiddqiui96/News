@@ -67,8 +67,12 @@ class TopStoriesServiceTest: XCTestCase {
         
         sampleErrorCodes.enumerated().forEach({ index, code in
             
+            let model1JSON = StoryItem(id: UUID(), section: "Home", subsection: "Home-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType1", updatedDateString: nil, createdDateString: nil, publishedDateString: nil, materialTypeFacet: nil, kicker: nil, desFacet: nil, orgFacet: [], perFacet: [], geoFacet: [], multimedia: [], shortURL: nil).makeJSON()
+            
+            let data = try! JSONSerialization.data(withJSONObject: model1JSON)
+            
             expect(sut, toCompleteWith: .failure(.invalidData)) {
-                client.success(with: code, at: index)
+                client.success(with: code, and: data, at: index)
             }
         })
        
