@@ -34,7 +34,7 @@ class TopStoriesService {
             switch response {
                 
             case .success:
-                completion(.failure(.invalidData))
+               completion(.failure(.invalidData))
                 
             case .failure:
                 completion(.failure(.internetConnectivity))

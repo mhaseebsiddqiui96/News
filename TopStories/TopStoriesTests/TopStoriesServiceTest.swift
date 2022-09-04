@@ -53,18 +53,11 @@ class TopStoriesServiceTest: XCTestCase {
     func test_fetch_deliversErrorOnClientError() throws {
         
         let (client, sut) = makeSUT()
-        var receivedError: [TopStoriesService.Error] = []
-        sut.fetch { response in
-            switch response {
-            case .success:
-                break
-            case .failure(let err):
-                receivedError.append(err)
-            }
+   
+        expect(sut, toCompleteWith: .failure(.internetConnectivity)) {
+            let responseError = NSError(domain: "", code: 0)
+            client.fail(with: responseError)
         }
-        let responseError = NSError(domain: "", code: 0)
-        client.fail(with: responseError)
-        XCTAssertEqual(receivedError, [.internetConnectivity])
     }
     
     func test_fetch_deliversErrorOnNon200StatusCode() throws {
@@ -74,18 +67,9 @@ class TopStoriesServiceTest: XCTestCase {
         
         sampleErrorCodes.enumerated().forEach({ index, code in
             
-            var receivedError: [TopStoriesService.Error] = []
-            sut.fetch { response in
-                switch response {
-                case .success:
-                    break
-                case .failure(let err):
-                    receivedError.append(err)
-                }
+            expect(sut, toCompleteWith: .failure(.invalidData)) {
+                client.success(with: code, at: index)
             }
-            client.success(with: code, at: index)
-            XCTAssertEqual(receivedError, [.invalidData])
-            
         })
        
     }
@@ -93,24 +77,14 @@ class TopStoriesServiceTest: XCTestCase {
     func test_fetch_deliversErrorOn200WithInvalidJSON() throws {
         let (client, sut) = makeSUT()
         
-        var receivedError: [TopStoriesService.Error] = []
-        sut.fetch { response in
-            switch response {
-            case .success:
-                break
-            case .failure(let err):
-                receivedError.append(err)
-            }
+        expect(sut, toCompleteWith: .failure(.invalidData)) {
+            client.success(with: 200, and: Data("invalid".utf8))
         }
-        client.success(with: 200, and: Data("invalid".utf8))
-        XCTAssertEqual(receivedError, [.invalidData])
-        
-        
     }
     
     
     
-    //MARK: - Helpers
+    // MARK: - Helpers
     class HTTPClientSpy: HTTPClient {
         
         var requestedURLs: [URLRequest] {
@@ -151,6 +125,29 @@ class TopStoriesServiceTest: XCTestCase {
         let sut = TopStoriesService(client: client, urlRequest: URLRequest(url: url))
         
         return (client, sut)
+    }
+    
+    // expect method to remove duplicate code
+    func expect(_ sut: TopStoriesService,
+                toCompleteWith result: Result<StoryItem, TopStoriesService.Error>,
+                on action: () -> Void,
+                file: StaticString = #filePath,
+                line: UInt = #line) {
+        
+        var receivedResult: [Result<StoryItem, TopStoriesService.Error>] = []
+        
+        sut.fetch { response in
+            switch response {
+            case .success(let item):
+                receivedResult.append(.success(item))
+            case .failure(let err):
+                receivedResult.append(.failure(err))
+            }
+        }
+        
+        action()
+        
+        XCTAssertEqual(receivedResult, [result], file: file, line: line)
     }
  
     
