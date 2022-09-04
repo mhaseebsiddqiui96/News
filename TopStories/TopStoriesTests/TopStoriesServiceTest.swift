@@ -65,7 +65,21 @@ class TopStoriesServiceTest: XCTestCase {
         let responseError = NSError(domain: "", code: 0)
         client.fail(with: responseError)
         XCTAssertEqual(receivedError, [.internetConnectivity])
-        
+    }
+    
+    func test_fetch_deliversErrorOnNon200StatusCode() throws {
+        let (client, sut) = makeSUT()
+        var receivedError: [TopStoriesService.Error] = []
+        sut.fetch { response in
+            switch response {
+            case .success:
+                break
+            case .failure(let err):
+                receivedError.append(err)
+            }
+        }
+        client.success(with: 400)
+        XCTAssertEqual(receivedError, [.invalidData])
     }
     
     //MARK: - Helpers
@@ -88,6 +102,17 @@ class TopStoriesServiceTest: XCTestCase {
         
         func fail(with error: Error, at index: Int = 0) {
             performRequestInputs[index].completion(.failure(error))
+        }
+        
+        func success(with statusCode: Int, and data: Data = Data(), at index: Int = 0) {
+            let url = performRequestInputs[index].urlRequest.url!
+            let response = HTTPURLResponse(url: url,
+                                           statusCode: statusCode,
+                                           httpVersion: nil,
+                                           headerFields: nil)
+            
+            
+            performRequestInputs[index].completion(.success((data,    response!)))
         }
         
     }
