@@ -68,9 +68,12 @@ class TopStoriesServiceTest: XCTestCase {
     }
     
     func test_fetch_deliversErrorOnNon200StatusCode() throws {
+        
         let (client, sut) = makeSUT()
         let sampleErrorCodes = [300, 400 , 500, 405]
+        
         sampleErrorCodes.enumerated().forEach({ index, code in
+            
             var receivedError: [TopStoriesService.Error] = []
             sut.fetch { response in
                 switch response {
@@ -82,8 +85,27 @@ class TopStoriesServiceTest: XCTestCase {
             }
             client.success(with: code, at: index)
             XCTAssertEqual(receivedError, [.invalidData])
+            
         })
        
+    }
+    
+    func test_fetch_deliversErrorOn200WithInvalidJSON() throws {
+        let (client, sut) = makeSUT()
+        
+        var receivedError: [TopStoriesService.Error] = []
+        sut.fetch { response in
+            switch response {
+            case .success:
+                break
+            case .failure(let err):
+                receivedError.append(err)
+            }
+        }
+        client.success(with: 200, and: Data("invalid".utf8))
+        XCTAssertEqual(receivedError, [.invalidData])
+        
+        
     }
     
     
@@ -110,7 +132,7 @@ class TopStoriesServiceTest: XCTestCase {
             performRequestInputs[index].completion(.failure(error))
         }
         
-        func success(with statusCode: Int, at index: Int = 0) {
+        func success(with statusCode: Int, and data: Data = Data(), at index: Int = 0) {
             let url = performRequestInputs[index].urlRequest.url!
             let response = HTTPURLResponse(url: url,
                                            statusCode: statusCode,
@@ -118,7 +140,7 @@ class TopStoriesServiceTest: XCTestCase {
                                            headerFields: nil)
             
             
-            performRequestInputs[index].completion(.success(    response!))
+            performRequestInputs[index].completion(.success((data: data, response: response!)))
         }
         
     }
