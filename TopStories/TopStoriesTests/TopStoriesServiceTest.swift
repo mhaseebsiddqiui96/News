@@ -69,17 +69,21 @@ class TopStoriesServiceTest: XCTestCase {
     
     func test_fetch_deliversErrorOnNon200StatusCode() throws {
         let (client, sut) = makeSUT()
-        var receivedError: [TopStoriesService.Error] = []
-        sut.fetch { response in
-            switch response {
-            case .success:
-                break
-            case .failure(let err):
-                receivedError.append(err)
+        let sampleErrorCodes = [300, 400 , 500, 405]
+        sampleErrorCodes.enumerated().forEach({ index, code in
+            var receivedError: [TopStoriesService.Error] = []
+            sut.fetch { response in
+                switch response {
+                case .success:
+                    break
+                case .failure(let err):
+                    receivedError.append(err)
+                }
             }
-        }
-        client.success(with: 400)
-        XCTAssertEqual(receivedError, [.invalidData])
+            client.success(with: code, at: index)
+            XCTAssertEqual(receivedError, [.invalidData])
+        })
+       
     }
     
     
