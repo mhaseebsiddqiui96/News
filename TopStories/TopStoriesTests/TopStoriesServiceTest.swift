@@ -51,6 +51,7 @@ class TopStoriesServiceTest: XCTestCase {
     }
     
     func test_fetch_deliversErrorOnClientError() throws {
+        
         let (client, sut) = makeSUT()
         var receivedError: [TopStoriesService.Error] = []
         sut.fetch { response in
@@ -61,8 +62,8 @@ class TopStoriesServiceTest: XCTestCase {
                 receivedError.append(err)
             }
         }
-        
-        client.responseCompletions.first?(.failure(NSError(domain: "domain", code: 400)))
+        let responseError = NSError(domain: "", code: 0)
+        client.fail(with: responseError)
         XCTAssertEqual(receivedError, [.internetConnectivity])
         
     }
@@ -70,15 +71,23 @@ class TopStoriesServiceTest: XCTestCase {
     //MARK: - Helpers
     class HTTPClientSpy: HTTPClient {
         
-        var requestedURLs: [URLRequest] = []
-        var requestURLsCount: Int {
-            return requestedURLs.count
+        var requestedURLs: [URLRequest] {
+            return performRequestInputs.map({$0.0})
         }
-        var responseCompletions: [(HTTPClientResult) -> Void] = []
+        
+        var requestURLsCount: Int {
+            return performRequestInputs.count
+        }
+        
+        var performRequestInputs: [(urlRequest: URLRequest,
+                                    completion: (HTTPClientResult) -> Void)] = []
         
         func perform(urlRequest: URLRequest, completion: @escaping (HTTPClientResult) -> Void) {
-            requestedURLs.append(urlRequest)
-            responseCompletions.append(completion)
+            performRequestInputs.append((urlRequest, completion))
+        }
+        
+        func fail(with error: Error, at index: Int = 0) {
+            performRequestInputs[index].completion(.failure(error))
         }
         
     }
