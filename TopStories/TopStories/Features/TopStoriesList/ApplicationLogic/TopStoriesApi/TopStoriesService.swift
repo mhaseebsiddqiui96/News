@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias HTTPClientResult = Result<(data: Data, response: HTTPURLResponse), Error>
+typealias HTTPClientResult = Result<(HTTPURLResponse), Error>
 
 protocol HTTPClient {
     
@@ -33,12 +33,8 @@ class TopStoriesService {
         client.perform(urlRequest: urlRequest) { response in
             switch response {
                 
-            case .success(let result):
-                if result.response.statusCode == 200 {
-                    
-                } else {
-                    completion(.failure(.invalidData))
-                }
+            case .success:
+                completion(.failure(.invalidData))
                 
             case .failure:
                 completion(.failure(.internetConnectivity))

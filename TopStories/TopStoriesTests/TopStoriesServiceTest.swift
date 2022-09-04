@@ -82,6 +82,8 @@ class TopStoriesServiceTest: XCTestCase {
         XCTAssertEqual(receivedError, [.invalidData])
     }
     
+    
+    
     //MARK: - Helpers
     class HTTPClientSpy: HTTPClient {
         
@@ -104,7 +106,7 @@ class TopStoriesServiceTest: XCTestCase {
             performRequestInputs[index].completion(.failure(error))
         }
         
-        func success(with statusCode: Int, and data: Data = Data(), at index: Int = 0) {
+        func success(with statusCode: Int, at index: Int = 0) {
             let url = performRequestInputs[index].urlRequest.url!
             let response = HTTPURLResponse(url: url,
                                            statusCode: statusCode,
@@ -112,7 +114,7 @@ class TopStoriesServiceTest: XCTestCase {
                                            headerFields: nil)
             
             
-            performRequestInputs[index].completion(.success((data,    response!)))
+            performRequestInputs[index].completion(.success(    response!))
         }
         
     }
@@ -124,5 +126,6 @@ class TopStoriesServiceTest: XCTestCase {
         
         return (client, sut)
     }
+ 
     
 }
