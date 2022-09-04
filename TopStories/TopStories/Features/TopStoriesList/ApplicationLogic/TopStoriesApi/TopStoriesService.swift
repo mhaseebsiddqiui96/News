@@ -10,13 +10,18 @@ import Foundation
 typealias HTTPClientResult = Result<(Data, HTTPURLResponse), Error>
 
 protocol HTTPClient {
+    
     func perform(urlRequest: URLRequest, completion: @escaping(HTTPClientResult) -> Void)
 }
 
-class TopStoriesService: TopStoriesServiceProtocol {
+class TopStoriesService {
   
     private let client: HTTPClient
     private let urlRequest: URLRequest
+    
+    enum Error: Swift.Error {
+        case internetConnectivity
+    }
     
     init(client: HTTPClient, urlRequest: URLRequest) {
         self.client = client
@@ -25,7 +30,13 @@ class TopStoriesService: TopStoriesServiceProtocol {
     
     func fetch(completion: @escaping (Result<StoryItem, Error>) -> Void) {
         client.perform(urlRequest: urlRequest) { response in
-            
+            switch response {
+                
+            case .success((_, _)):
+                break
+            case .failure:
+                completion(.failure(.internetConnectivity))
+            }
         }
     }
 }

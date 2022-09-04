@@ -14,7 +14,7 @@ class TopStoriesServiceTest: XCTestCase {
     func test_init_doesNotRequestDataFromClient() throws {
         
         let (client, _) = makeSUT()
-        XCTAssert(client.requestedURL.isEmpty)
+        XCTAssert(client.requestedURLs.isEmpty)
         
     }
     
@@ -25,17 +25,60 @@ class TopStoriesServiceTest: XCTestCase {
         
         sut.fetch(completion: {_ in })
         
-        XCTAssertEqual(client.requestedURL.first?.url, url)
+        XCTAssertEqual(client.requestedURLs.first?.url, url)
     }
     
+
+    func test_fetchOnce_requestDataFromClientOnce() throws {
+        
+        let url = URL(string: "https://test1.com")!
+        let (client, sut) = makeSUT(url: url)
+        
+        sut.fetch(completion: {_ in })
+        
+        XCTAssertEqual(client.requestURLsCount, 1)
+    }
+    
+    func test_fetchTwice_requestDataFromClientTwice() throws {
+        
+        let url = URL(string: "https://test1.com")!
+        let (client, sut) = makeSUT(url: url)
+        
+        sut.fetch(completion: {_ in })
+        sut.fetch(completion: {_ in })
+        
+        XCTAssertEqual(client.requestURLsCount, 2)
+    }
+    
+    func test_fetch_deliversErrorOnClientError() throws {
+        let (client, sut) = makeSUT()
+        var receivedError: [TopStoriesService.Error] = []
+        sut.fetch { response in
+            switch response {
+            case .success:
+                break
+            case .failure(let err):
+                receivedError.append(err)
+            }
+        }
+        
+        client.responseCompletions.first?(.failure(NSError(domain: "domain", code: 400)))
+        XCTAssertEqual(receivedError, [.internetConnectivity])
+        
+    }
     
     //MARK: - Helpers
     class HTTPClientSpy: HTTPClient {
         
-        var requestedURL: [URLRequest] = []
+        var requestedURLs: [URLRequest] = []
+        var requestURLsCount: Int {
+            return requestedURLs.count
+        }
+        var responseCompletions: [(HTTPClientResult) -> Void] = []
         
         func perform(urlRequest: URLRequest, completion: @escaping (HTTPClientResult) -> Void) {
-            requestedURL.append(urlRequest)
+            requestedURLs.append(urlRequest)
+            responseCompletions.append(completion)
         }
         
     }
