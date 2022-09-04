@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FD3E5F728C501D3006E188D /* StoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD3E5F628C501D3006E188D /* StoryItem.swift */; };
 		0FE57F0228C3777900874B3D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE57F0128C3777900874B3D /* AppDelegate.swift */; };
 		0FE57F0B28C3777C00874B3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FE57F0A28C3777C00874B3D /* Assets.xcassets */; };
 		0FE57F0E28C3777C00874B3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0FE57F0C28C3777C00874B3D /* LaunchScreen.storyboard */; };
 		0FE57F4128C3E1C400874B3D /* TopStoriesServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE57F4028C3E1C400874B3D /* TopStoriesServiceTest.swift */; };
+		0FE57F4828C3E2AF00874B3D /* TopStoriesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE57F4728C3E2AF00874B3D /* TopStoriesService.swift */; };
+		0FE57F4A28C3E31100874B3D /* TopStoriesServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE57F4928C3E31100874B3D /* TopStoriesServiceProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0FD3E5F628C501D3006E188D /* StoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryItem.swift; sourceTree = "<group>"; };
 		0FE57EFE28C3777900874B3D /* TopStories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TopStories.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FE57F0128C3777900874B3D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0FE57F0A28C3777C00874B3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -31,6 +35,8 @@
 		0FE57F0F28C3777C00874B3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0FE57F3E28C3E1C400874B3D /* TopStoriesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopStoriesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FE57F4028C3E1C400874B3D /* TopStoriesServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesServiceTest.swift; sourceTree = "<group>"; };
+		0FE57F4728C3E2AF00874B3D /* TopStoriesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesService.swift; sourceTree = "<group>"; };
+		0FE57F4928C3E31100874B3D /* TopStoriesServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesServiceProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +57,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0FD3E5F428C49EDA006E188D /* TopStoriesApi */ = {
+			isa = PBXGroup;
+			children = (
+				0FE57F4728C3E2AF00874B3D /* TopStoriesService.swift */,
+				0FE57F4928C3E31100874B3D /* TopStoriesServiceProtocol.swift */,
+			);
+			path = TopStoriesApi;
+			sourceTree = "<group>";
+		};
+		0FD3E5F528C501AA006E188D /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				0FD3E5F628C501D3006E188D /* StoryItem.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
 		0FE57EF528C3777900874B3D = {
 			isa = PBXGroup;
 			children = (
@@ -72,6 +95,7 @@
 		0FE57F0028C3777900874B3D /* TopStories */ = {
 			isa = PBXGroup;
 			children = (
+				0FD3E5F528C501AA006E188D /* Entities */,
 				0FE57F3728C3E04500874B3D /* Features */,
 				0FE57F0128C3777900874B3D /* AppDelegate.swift */,
 				0FE57F0A28C3777C00874B3D /* Assets.xcassets */,
@@ -100,6 +124,7 @@
 		0FE57F3928C3E16F00874B3D /* ApplicationLogic */ = {
 			isa = PBXGroup;
 			children = (
+				0FD3E5F428C49EDA006E188D /* TopStoriesApi */,
 			);
 			path = ApplicationLogic;
 			sourceTree = "<group>";
@@ -213,6 +238,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FE57F0228C3777900874B3D /* AppDelegate.swift in Sources */,
+				0FE57F4A28C3E31100874B3D /* TopStoriesServiceProtocol.swift in Sources */,
+				0FD3E5F728C501D3006E188D /* StoryItem.swift in Sources */,
+				0FE57F4828C3E2AF00874B3D /* TopStoriesService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
