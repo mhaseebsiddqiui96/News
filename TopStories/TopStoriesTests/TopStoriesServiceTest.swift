@@ -82,6 +82,14 @@ class TopStoriesServiceTest: XCTestCase {
         }
     }
     
+    func test_fetch_deliversEmptyStoriesOn200StatusWithValidEmptyResultJSON() throws {
+        let (client, sut) = makeSUT()
+        expect(sut, toCompleteWith: .success([])) {
+            let validEmptyResultListJSON = Data("{\"results\": []}".utf8)
+            client.success(with: 200, and: validEmptyResultListJSON)
+        }
+    }
+    
     
     
     // MARK: - Helpers
@@ -129,12 +137,12 @@ class TopStoriesServiceTest: XCTestCase {
     
     // expect method to remove duplicate code
     func expect(_ sut: TopStoriesService,
-                toCompleteWith result: Result<StoryItem, TopStoriesService.Error>,
+                toCompleteWith result: Result<[StoryItem], TopStoriesService.Error>,
                 on action: () -> Void,
                 file: StaticString = #filePath,
                 line: UInt = #line) {
         
-        var receivedResult: [Result<StoryItem, TopStoriesService.Error>] = []
+        var receivedResult: [Result<[StoryItem], TopStoriesService.Error>] = []
         
         sut.fetch { response in
             switch response {

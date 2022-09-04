@@ -29,12 +29,16 @@ class TopStoriesService {
         self.urlRequest = urlRequest
     }
     
-    func fetch(completion: @escaping (Result<StoryItem, Error>) -> Void) {
+    func fetch(completion: @escaping (Result<[StoryItem], Error>) -> Void) {
         client.perform(urlRequest: urlRequest) { response in
             switch response {
                 
-            case .success:
-               completion(.failure(.invalidData))
+            case .success(let result):
+                if let _ = try?  JSONSerialization.jsonObject(with: result.data) {
+                    completion(.success([]))
+                } else {
+                    completion(.failure(.invalidData))
+                }
                 
             case .failure:
                 completion(.failure(.internetConnectivity))
