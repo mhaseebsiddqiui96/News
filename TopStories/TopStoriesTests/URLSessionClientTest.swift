@@ -21,7 +21,8 @@ class URLSessionClientTest: XCTestCase {
         let error = NSError(domain: "some-domeain", code: 1)
         
         //stubbing
-        URLProtocolStub.stub(with: error, for: url)
+        URLProtocolStub.stub(error: error, data: nil, response: nil, for: url)
+        
         let exp = expectation(description: "wait for the error to come")
         sut.perform(urlRequest: request) { result in
             switch result {
@@ -41,6 +42,7 @@ class URLSessionClientTest: XCTestCase {
         URLProtocol.unregisterClass(URLProtocolStub.self)
         
     }
+    
     
     //MARK: - Helpers
     
@@ -65,17 +67,27 @@ class URLSessionClientTest: XCTestCase {
         override func startLoading() {
             guard let url = request.url, let stub = URLProtocolStub.stubsForURLs[url]  else { fatalError() }
             
+            if let data = stub.data {
+                client?.urlProtocol(self, didLoad: data)
+            }
+            
+            if let response = stub.response {
+                client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+            }
+            
             if let err = stub.error {
                 client?.urlProtocol(self, didFailWithError: err)
             }
+            
+            
         }
         
         override func stopLoading() {
             
         }
         
-        static func stub(with error: Error, for URL: URL) {
-            URLProtocolStub.stubsForURLs[URL] = Stub(error: error, data: nil, response: nil)
+        static func stub(error: Error?, data: Data?, response: URLResponse?, for URL: URL) {
+            URLProtocolStub.stubsForURLs[URL] = Stub(error: error, data: data, response: response)
         }
     }
     
