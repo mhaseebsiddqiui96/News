@@ -63,7 +63,7 @@ class TopStoriesServiceTest: XCTestCase {
     func test_fetch_deliversErrorOnNon200StatusCode() throws {
         
         let (client, sut) = makeSUT()
-        let sampleErrorCodes = [300, 400 , 500, 405]
+        let sampleErrorCodes = [300, 400, 500, 405]
         
         sampleErrorCodes.enumerated().forEach({ index, code in
             
@@ -76,6 +76,15 @@ class TopStoriesServiceTest: XCTestCase {
             }
         })
        
+    }
+    
+    func test_fetch_deliversUnAuthorizeErrorOn401StatusCode() throws {
+        
+        let (client, sut) = makeSUT()
+   
+        expect(sut, toCompleteWith: .failure(.unAuthorized)) {
+            client.success(with: 401)
+        }
     }
     
     func test_fetch_deliversErrorOn200WithInvalidJSON() throws {

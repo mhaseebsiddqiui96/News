@@ -7,13 +7,15 @@
 
 import Foundation
 
-class TopStoriesService {
+class TopStoriesService: TopStoriesServiceProtocol {
+
   
     private let client: HTTPClient
     private let urlRequest: URLRequest
     
     enum Error: Swift.Error {
         case internetConnectivity
+        case unAuthorized
         case invalidData
     }
     
@@ -23,19 +25,29 @@ class TopStoriesService {
     }
     
     func fetch(completion: @escaping (Result<[StoryItem], Error>) -> Void) {
-        client.perform(urlRequest: urlRequest) { response in
+        client.perform(urlRequest: urlRequest) {[weak self] response in
+            guard let self = self else {return}
             switch response {
-                
             case .success(let result):
-                if result.response.statusCode == 200, let apiResponse = try? JSONDecoder().decode(TopStoriesServiceResponse.self, from: result.data) {
-                    completion(.success(apiResponse.results?.map({$0.storyItem}) ?? []))
-                } else {
-                    completion(.failure(.invalidData))
-                }
-                
+                completion(self.parseSuccessResponse(result))
             case .failure:
-                completion(.failure(.internetConnectivity))
+                completion(.failure(Error.internetConnectivity))
             }
         }
+    }
+    
+    private func parseSuccessResponse(_ result: ((data: Data, response: HTTPURLResponse))) -> Result<[StoryItem], Error> {
+       
+        if result.response.statusCode == 200, let apiResponse = self.decodeResponse(from: result.data) {
+            return .success(apiResponse.results?.map({$0.storyItem}) ?? [])
+        } else if result.response.statusCode == 401 {
+            return .failure(Error.unAuthorized)
+        } else {
+            return .failure(Error.invalidData)
+        }
+    }
+    
+    private func decodeResponse(from data: Data) -> TopStoriesServiceResponse? {
+        return try? JSONDecoder().decode(TopStoriesServiceResponse.self, from: data)
     }
 }

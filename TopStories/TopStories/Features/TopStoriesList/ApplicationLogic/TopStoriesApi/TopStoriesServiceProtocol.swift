@@ -8,5 +8,6 @@
 import Foundation
 
 protocol TopStoriesServiceProtocol {
-    func fetch(completion: @escaping(Result<StoryItem, Error>) -> Void)
+    associatedtype Error: Swift.Error
+    func fetch(completion: @escaping(Result<[StoryItem], Error>) -> Void)
 }
