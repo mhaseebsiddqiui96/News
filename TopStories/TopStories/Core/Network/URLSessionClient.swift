@@ -19,6 +19,8 @@ class URLSessionClient: HTTPClient {
         let task = session.dataTask(with: urlRequest) { data, response, err in
             if let err = err {
                 completion(.failure(err))
+            } else if let data = data, let httpResponse = response as? HTTPURLResponse {
+                completion(.success((data: data, response: httpResponse)))
             }
         }
         

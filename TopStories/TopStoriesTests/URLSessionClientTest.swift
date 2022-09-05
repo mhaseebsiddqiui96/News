@@ -40,7 +40,37 @@ class URLSessionClientTest: XCTestCase {
         
         wait(for: [exp], timeout: 1.0)
         URLProtocol.unregisterClass(URLProtocolStub.self)
+    }
+    
+    func test_perform_deliversSuccessOnDataAndResponse() throws {
+        URLProtocol.registerClass(URLProtocolStub.self)
+
+        let url = URL(string: "https://any-url.com")!
+        let urlRequest = URLRequest(url: url)
+        let expectedResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
+        let sut = URLSessionClient()
+        let expectedData = Data()
         
+        URLProtocolStub.stub(error: nil, data: expectedData, response: expectedResponse, for: url)
+        
+        let expectation = expectation(description: "Wait for perform to finish")
+        sut.perform(urlRequest: urlRequest) { result in
+            switch result {
+                
+            case .success((let data, let response)):
+                XCTAssertEqual(data, expectedData)
+                XCTAssertEqual(response.statusCode, expectedResponse?.statusCode)
+                XCTAssertEqual(response.url, expectedResponse?.url)
+            case .failure(let error):
+                XCTFail("Expected Succes but found error \(error)")
+            }
+            
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1.0)
+        
+        URLProtocolStub.unregisterClass(URLProtocolStub.self)
     }
     
     
@@ -78,6 +108,8 @@ class URLSessionClientTest: XCTestCase {
             if let err = stub.error {
                 client?.urlProtocol(self, didFailWithError: err)
             }
+            
+            client?.urlProtocolDidFinishLoading(self)
             
             
         }
