@@ -11,6 +11,7 @@
 		0FD3E5F928C550F2006E188D /* TopStoriesServiceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD3E5F828C550F2006E188D /* TopStoriesServiceResponse.swift */; };
 		0FD3E5FD28C5554B006E188D /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD3E5FC28C5554B006E188D /* HTTPClient.swift */; };
 		0FD3E5FF28C560AA006E188D /* URLSessionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD3E5FE28C560AA006E188D /* URLSessionClient.swift */; };
+		0FD3E60128C5EEBB006E188D /* URLSessionClientTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD3E60028C5EEBB006E188D /* URLSessionClientTest.swift */; };
 		0FE57F0228C3777900874B3D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE57F0128C3777900874B3D /* AppDelegate.swift */; };
 		0FE57F0B28C3777C00874B3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FE57F0A28C3777C00874B3D /* Assets.xcassets */; };
 		0FE57F0E28C3777C00874B3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0FE57F0C28C3777C00874B3D /* LaunchScreen.storyboard */; };
@@ -34,6 +35,7 @@
 		0FD3E5F828C550F2006E188D /* TopStoriesServiceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesServiceResponse.swift; sourceTree = "<group>"; };
 		0FD3E5FC28C5554B006E188D /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		0FD3E5FE28C560AA006E188D /* URLSessionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionClient.swift; sourceTree = "<group>"; };
+		0FD3E60028C5EEBB006E188D /* URLSessionClientTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionClientTest.swift; sourceTree = "<group>"; };
 		0FE57EFE28C3777900874B3D /* TopStories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TopStories.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FE57F0128C3777900874B3D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0FE57F0A28C3777C00874B3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -66,8 +68,8 @@
 		0FD3E5F428C49EDA006E188D /* TopStoriesApi */ = {
 			isa = PBXGroup;
 			children = (
-				0FE57F4728C3E2AF00874B3D /* TopStoriesService.swift */,
 				0FE57F4928C3E31100874B3D /* TopStoriesServiceProtocol.swift */,
+				0FE57F4728C3E2AF00874B3D /* TopStoriesService.swift */,
 				0FD3E5F828C550F2006E188D /* TopStoriesServiceResponse.swift */,
 			);
 			path = TopStoriesApi;
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				0FE57F4028C3E1C400874B3D /* TopStoriesServiceTest.swift */,
+				0FD3E60028C5EEBB006E188D /* URLSessionClientTest.swift */,
 			);
 			path = TopStoriesTests;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FE57F4128C3E1C400874B3D /* TopStoriesServiceTest.swift in Sources */,
+				0FD3E60128C5EEBB006E188D /* URLSessionClientTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

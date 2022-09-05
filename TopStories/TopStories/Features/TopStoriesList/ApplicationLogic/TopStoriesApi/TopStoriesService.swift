@@ -36,6 +36,7 @@ class TopStoriesService: TopStoriesServiceProtocol {
         }
     }
     
+    // may be move this to some helper class in future
     private func parseSuccessResponse(_ result: ((data: Data, response: HTTPURLResponse))) -> Result<[StoryItem], Error> {
        
         if result.response.statusCode == 200, let apiResponse = self.decodeResponse(from: result.data) {
