@@ -17,7 +17,9 @@ class TopStoriesListInteractor: TopStoriesListInteractorInputProtocol {
     }
     
     func getTopStoriesList(for section: String) {
-        
+        service.fetch { _ in
+            
+        }
     }
 
 }

@@ -16,16 +16,17 @@ class TopStoriesListInteractorTest: XCTestCase {
         
         sut.getTopStoriesList(for: "Home")
         
-       // XCTAssertEqual(service., <#T##expression2: Equatable##Equatable#>)
+        XCTAssertEqual(service.capturedCompletions.count, 1)
     }
     
     
     //MARK: - Helpers
    
     class TopStoriesServiceSpy: TopStoriesServiceProtocol {
-        
+     
+        var capturedCompletions: [(Result<[StoryItem], TopStoryServiceError>) -> Void] = []
         func fetch(completion: @escaping (Result<[StoryItem], TopStoryServiceError>) -> Void) {
-            
+            self.capturedCompletions.append(completion)
         }
     }
 }
