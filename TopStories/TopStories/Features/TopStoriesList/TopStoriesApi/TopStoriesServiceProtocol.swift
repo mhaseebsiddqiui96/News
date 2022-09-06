@@ -7,7 +7,12 @@
 
 import Foundation
 
+enum TopStoryServiceError: Swift.Error {
+    case internetConnectivity
+    case unAuthorized
+    case invalidData
+}
+
 protocol TopStoriesServiceProtocol {
-    associatedtype Error: Swift.Error
-    func fetch(completion: @escaping(Result<[StoryItem], Error>) -> Void)
+    func fetch(completion: @escaping(Result<[StoryItem], TopStoryServiceError>) -> Void)
 }

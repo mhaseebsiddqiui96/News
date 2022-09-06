@@ -165,12 +165,12 @@ class TopStoriesServiceTest: XCTestCase {
     
     // expect method to remove duplicate code
     func expect(_ sut: TopStoriesService,
-                toCompleteWith result: Result<[StoryItem], TopStoriesService.Error>,
+                toCompleteWith result: Result<[StoryItem], TopStoryServiceError>,
                 on action: () -> Void,
                 file: StaticString = #filePath,
                 line: UInt = #line) {
         
-        var receivedResult: [Result<[StoryItem], TopStoriesService.Error>] = []
+        var receivedResult: [Result<[StoryItem], TopStoryServiceError>] = []
         
         sut.fetch { response in
             switch response {

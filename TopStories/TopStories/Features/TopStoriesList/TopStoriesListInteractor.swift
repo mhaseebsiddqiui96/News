@@ -10,8 +10,14 @@ import Foundation
 class TopStoriesListInteractor: TopStoriesListInteractorInputProtocol {
     
     var presenter: TopStoriesListInteractorOutputProtocol?
+    private let service: TopStoriesServiceProtocol
+    
+    init(service: TopStoriesServiceProtocol) {
+        self.service = service
+    }
     
     func getTopStoriesList(for section: String) {
+        
     }
 
 }

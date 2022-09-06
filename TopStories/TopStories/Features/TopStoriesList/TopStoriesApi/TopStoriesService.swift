@@ -13,38 +13,32 @@ class TopStoriesService: TopStoriesServiceProtocol {
     private let client: HTTPClient
     private let urlRequest: URLRequest
     
-    enum Error: Swift.Error {
-        case internetConnectivity
-        case unAuthorized
-        case invalidData
-    }
-    
     init(client: HTTPClient, urlRequest: URLRequest) {
         self.client = client
         self.urlRequest = urlRequest
     }
     
-    func fetch(completion: @escaping (Result<[StoryItem], Error>) -> Void) {
+    func fetch(completion: @escaping (Result<[StoryItem], TopStoryServiceError>) -> Void) {
         client.perform(urlRequest: urlRequest) {[weak self] response in
             guard let self = self else {return}
             switch response {
             case .success(let result):
                 completion(self.parseSuccessResponse(result))
             case .failure:
-                completion(.failure(Error.internetConnectivity))
+                completion(.failure(.internetConnectivity))
             }
         }
     }
     
     // may be move this to some helper class in future
-    private func parseSuccessResponse(_ result: ((data: Data, response: HTTPURLResponse))) -> Result<[StoryItem], Error> {
+    private func parseSuccessResponse(_ result: ((data: Data, response: HTTPURLResponse))) -> Result<[StoryItem], TopStoryServiceError> {
        
         if result.response.statusCode == 200, let apiResponse = self.decodeResponse(from: result.data) {
             return .success(apiResponse.results?.map({$0.storyItem}) ?? [])
         } else if result.response.statusCode == 401 {
-            return .failure(Error.unAuthorized)
+            return .failure(.unAuthorized)
         } else {
-            return .failure(Error.invalidData)
+            return .failure(.invalidData)
         }
     }
     
