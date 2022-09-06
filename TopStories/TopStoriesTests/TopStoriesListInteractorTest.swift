@@ -19,7 +19,7 @@ class TopStoriesListInteractorTest: XCTestCase {
         XCTAssertEqual(service.capturedCompletions.count, 1)
     }
     
-    func test_getTopStories_notifiesPresenterWithConectivityError_whenReceivesConnectivityErrorFromClient() throws {
+    func test_getTopStories_notifiesPresenterWithConectivityError_whenReceivesConnectivityErrorFromSerivce() throws {
         let service = TopStoriesServiceSpy()
         let presenter = PresenterSpy()
         let sut = TopStoriesListInteractor(service: service)
@@ -31,7 +31,7 @@ class TopStoriesListInteractorTest: XCTestCase {
         XCTAssertEqual(presenter.connectivityErrorCount, 1)
     }
     
-    func test_getTopStories_notifiesPresenterWithInvalidDataError_whenReceivesInvalidDataErrorFromClient() throws {
+    func test_getTopStories_notifiesPresenterWithInvalidDataError_whenReceivesInvalidDataErrorFromSerivce() throws {
         let service = TopStoriesServiceSpy()
         let presenter = PresenterSpy()
         let sut = TopStoriesListInteractor(service: service)
@@ -44,7 +44,7 @@ class TopStoriesListInteractorTest: XCTestCase {
     }
     
     
-    func test_getTopStories_notifiesPresenterWithAuthError_whenReceivesAuthErrorFromClient() throws {
+    func test_getTopStories_notifiesPresenterWithAuthError_whenReceivesAuthErrorFromSerivce() throws {
         let service = TopStoriesServiceSpy()
         let presenter = PresenterSpy()
         let sut = TopStoriesListInteractor(service: service)
@@ -54,6 +54,24 @@ class TopStoriesListInteractorTest: XCTestCase {
         service.complete(with: .failure(.unAuthorized))
         
         XCTAssertEqual(presenter.authenticationErrorCount, 1)
+    }
+    
+    
+    func test_getTopStories_notifiesPresenterWithTopNews_whenReceivesNewsFromSerivce() throws {
+        let service = TopStoriesServiceSpy()
+        let presenter = PresenterSpy()
+        let sut = TopStoriesListInteractor(service: service)
+        
+        let expectedStories = [
+            StoryItem(id: UUID(), section: "Home1", subsection: "Something1", title: nil, abstract: nil, url: nil, uri: nil, byline: nil, itemType: nil, updatedDateString: nil, createdDateString: nil, publishedDateString: nil, materialTypeFacet: nil, kicker: nil, desFacet: nil, orgFacet: nil, perFacet: nil, geoFacet: nil, multimedia: nil, shortURL: nil),
+            StoryItem(id: UUID(), section: "Home2", subsection: "Something2", title: nil, abstract: nil, url: nil, uri: nil, byline: nil, itemType: nil, updatedDateString: nil, createdDateString: nil, publishedDateString: nil, materialTypeFacet: nil, kicker: nil, desFacet: nil, orgFacet: nil, perFacet: nil, geoFacet: nil, multimedia: nil, shortURL: nil)
+        ]
+        sut.presenter = presenter
+        
+        sut.getTopStoriesList(for: "Home")
+        service.complete(with: .success(expectedStories))
+        
+        XCTAssertEqual(presenter.receivedStories, expectedStories)
     }
     
     
@@ -76,10 +94,10 @@ class TopStoriesListInteractorTest: XCTestCase {
         var connectivityErrorCount = 0
         var invalidDataErrorCount = 0
         var authenticationErrorCount = 0
-
+        var receivedStories = [StoryItem]()
         
         func presentListOfStories(_ stories: [StoryItem]) {
-            
+            receivedStories = stories
         }
         
         func presentConnectivityError() {

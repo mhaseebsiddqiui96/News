@@ -20,8 +20,8 @@ class TopStoriesListInteractor: TopStoriesListInteractorInputProtocol {
         service.fetch {[weak self] result in
             guard let self = self else {return}
             switch result {
-            case .success:
-                break
+            case .success(let stories):
+                self.presenter?.presentListOfStories(stories)
             case .failure(let err):
                 self.handleFailure(with: err)
             }
