@@ -26,6 +26,7 @@ class TopStoriesListInteractor: TopStoriesListInteractorInputProtocol {
                 self.handleFailure(with: err)
             }
         }
+        
     }
     
     private func handleFailure(with error: TopStoryServiceError) {

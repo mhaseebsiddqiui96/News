@@ -14,6 +14,7 @@
 		0FCB215A28C7C3E8004D6CF9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB215928C7C3E8004D6CF9 /* Constants.swift */; };
 		0FCB216028C7D678004D6CF9 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB215F28C7D678004D6CF9 /* Routable.swift */; };
 		0FCB216328C7E00B004D6CF9 /* URL+QueryItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB216228C7E00B004D6CF9 /* URL+QueryItems.swift */; };
+		0FCB216528C7EEE1004D6CF9 /* TopStoriesListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB216428C7EEE1004D6CF9 /* TopStoriesListPresenter.swift */; };
 		0FD3E5F728C501D3006E188D /* StoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD3E5F628C501D3006E188D /* StoryItem.swift */; };
 		0FD3E5F928C550F2006E188D /* TopStoriesServiceResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD3E5F828C550F2006E188D /* TopStoriesServiceResponseModel.swift */; };
 		0FD3E5FD28C5554B006E188D /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD3E5FC28C5554B006E188D /* HTTPClient.swift */; };
@@ -45,6 +46,7 @@
 		0FCB215928C7C3E8004D6CF9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0FCB215F28C7D678004D6CF9 /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
 		0FCB216228C7E00B004D6CF9 /* URL+QueryItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+QueryItems.swift"; sourceTree = "<group>"; };
+		0FCB216428C7EEE1004D6CF9 /* TopStoriesListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesListPresenter.swift; sourceTree = "<group>"; };
 		0FD3E5F628C501D3006E188D /* StoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryItem.swift; sourceTree = "<group>"; };
 		0FD3E5F828C550F2006E188D /* TopStoriesServiceResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesServiceResponseModel.swift; sourceTree = "<group>"; };
 		0FD3E5FC28C5554B006E188D /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				0FD3E5F428C49EDA006E188D /* TopStoriesApi */,
 				0FCB214D28C69B66004D6CF9 /* TopStoriesListProtocols.swift */,
 				0FCB214F28C69CE7004D6CF9 /* TopStoriesListInteractor.swift */,
+				0FCB216428C7EEE1004D6CF9 /* TopStoriesListPresenter.swift */,
 			);
 			path = TopStoriesList;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				0FCB216328C7E00B004D6CF9 /* URL+QueryItems.swift in Sources */,
 				0FE57F4A28C3E31100874B3D /* TopStoriesServiceProtocol.swift in Sources */,
 				0FD3E5FD28C5554B006E188D /* HTTPClient.swift in Sources */,
+				0FCB216528C7EEE1004D6CF9 /* TopStoriesListPresenter.swift in Sources */,
 				0FD3E5F728C501D3006E188D /* StoryItem.swift in Sources */,
 				0FCB215028C69CE7004D6CF9 /* TopStoriesListInteractor.swift in Sources */,
 				0FD3E5FF28C560AA006E188D /* URLSessionClient.swift in Sources */,

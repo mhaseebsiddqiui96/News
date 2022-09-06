@@ -7,6 +7,11 @@
 
 import Foundation
 
+// MARK: Wireframe -
+protocol TopStoriesListWireframeProtocol: AnyObject {
+    func routeToStoryDetail(with entitiy: StoryItem)
+}
+
 // MARK: Interactor -
 protocol TopStoriesListInteractorOutputProtocol: AnyObject {
 
@@ -23,4 +28,19 @@ protocol TopStoriesListInteractorInputProtocol: AnyObject {
 
     /* Presenter -> Interactor */
     func getTopStoriesList(for section: String)
+}
+
+
+// MARK: Presenter -
+protocol TopStoriesListPresenterProtocol: AnyObject {
+
+    var interactor: TopStoriesListInteractorInputProtocol? { get set }
+}
+
+// MARK: View -
+protocol TopStoriesListViewProtocol: AnyObject {
+
+    var presenter: TopStoriesListPresenterProtocol? { get set }
+
+    /* Presenter -> ViewController */
 }
