@@ -13,6 +13,7 @@ protocol TopStoriesListInteractorOutputProtocol: AnyObject {
     /* Interactor -> Presenter */
     func presentListOfStories(_ stories: [StoryItem])
     func presentConnectivityError()
+    func presentInvalidDataError()
 }
 
 protocol TopStoriesListInteractorInputProtocol: AnyObject {

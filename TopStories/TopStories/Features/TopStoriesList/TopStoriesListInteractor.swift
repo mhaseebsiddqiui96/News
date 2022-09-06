@@ -19,8 +19,27 @@ class TopStoriesListInteractor: TopStoriesListInteractorInputProtocol {
     func getTopStoriesList(for section: String) {
         service.fetch {[weak self] result in
             guard let self = self else {return}
-            self.presenter?.presentConnectivityError()
+            switch result {
+            case .success:
+                break
+            case .failure(let err):
+                self.handleFailure(with: err)
+            }
         }
+    }
+    
+    private func handleFailure(with error: TopStoryServiceError) {
+        switch error {
+            
+       
+        case .internetConnectivity:
+            self.presenter?.presentConnectivityError()
+        case .unAuthorized:
+            break
+        case .invalidData:
+            self.presenter?.presentInvalidDataError()
+        }
+
     }
 
 }

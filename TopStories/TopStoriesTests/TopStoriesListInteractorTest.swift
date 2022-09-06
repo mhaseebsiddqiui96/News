@@ -19,7 +19,7 @@ class TopStoriesListInteractorTest: XCTestCase {
         XCTAssertEqual(service.capturedCompletions.count, 1)
     }
     
-    func test_getTopStories_notifiesPresenterConectivityError() throws {
+    func test_getTopStories_notifiesPresenterWithConectivityError_whenReceivesConnectivityErrorFromClient() throws {
         let service = TopStoriesServiceSpy()
         let presenter = PresenterSpy()
         let sut = TopStoriesListInteractor(service: service)
@@ -29,6 +29,18 @@ class TopStoriesListInteractorTest: XCTestCase {
         service.complete(with: .failure(.internetConnectivity))
         
         XCTAssertEqual(presenter.connectivityErrorCount, 1)
+    }
+    
+    func test_getTopStories_notifiesPresenterWithInvalidDataError_whenReceivesInvalidDataErrorFromClient() throws {
+        let service = TopStoriesServiceSpy()
+        let presenter = PresenterSpy()
+        let sut = TopStoriesListInteractor(service: service)
+        sut.presenter = presenter
+        
+        sut.getTopStoriesList(for: "Home")
+        service.complete(with: .failure(.invalidData))
+        
+        XCTAssertEqual(presenter.invalidDataErrorCount, 1)
     }
     
     
@@ -49,6 +61,8 @@ class TopStoriesListInteractorTest: XCTestCase {
     
     class PresenterSpy: TopStoriesListInteractorOutputProtocol {
         var connectivityErrorCount = 0
+        var invalidDataErrorCount = 0
+
         
         func presentListOfStories(_ stories: [StoryItem]) {
             
@@ -56,6 +70,10 @@ class TopStoriesListInteractorTest: XCTestCase {
         
         func presentConnectivityError() {
             connectivityErrorCount += 1
+        }
+        
+        func presentInvalidDataError() {
+            invalidDataErrorCount += 1
         }
         
     }
