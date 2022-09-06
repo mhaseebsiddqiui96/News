@@ -67,7 +67,7 @@ class TopStoriesServiceTest: XCTestCase {
         
         sampleErrorCodes.enumerated().forEach({ index, code in
             
-            let model1JSON = StoryItem(id: UUID(), section: "Home", subsection: "Home-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType1", updatedDateString: nil, createdDateString: nil, publishedDateString: nil, materialTypeFacet: nil, kicker: nil, desFacet: nil, orgFacet: [], perFacet: [], geoFacet: [], multimedia: [], shortURL: nil).makeJSON()
+            let model1JSON = StoryItem(id: UUID(), section: "Home", subsection: "Home-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType1", updatedDate: nil, createdDate: nil, publishedDate: nil, materialTypeFacet: nil, kicker: nil, desFacet: nil, orgFacet: [], perFacet: [], geoFacet: [], multimedia: [], shortURL: nil).makeJSON()
             
             let data = try! JSONSerialization.data(withJSONObject: model1JSON)
             
@@ -106,10 +106,10 @@ class TopStoriesServiceTest: XCTestCase {
     func test_fetch_deliversListOfStoriesOn200StatusCodeWithValidJSON() throws {
         let (client, sut) = makeSUT()
         
-        let model1 = StoryItem(id: UUID(), section: "Home", subsection: "Home-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType1", updatedDateString: nil, createdDateString: nil, publishedDateString: nil, materialTypeFacet: nil, kicker: nil, desFacet: nil, orgFacet: [], perFacet: [], geoFacet: [], multimedia: [], shortURL: nil)
+        let model1 = StoryItem(id: UUID(), section: "Home", subsection: "Home-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType1", updatedDate: nil, createdDate: nil, publishedDate: nil, materialTypeFacet: nil, kicker: nil, desFacet: nil, orgFacet: [], perFacet: [], geoFacet: [], multimedia: [], shortURL: nil)
         let model1JSON = model1.makeJSON()
         
-        let model2 = StoryItem(id: UUID(), section: "News", subsection: "News-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType2", updatedDateString: nil, createdDateString: nil, publishedDateString: nil, materialTypeFacet: nil, kicker: nil, desFacet: nil, orgFacet: [], perFacet: [], geoFacet: [], multimedia: [], shortURL: nil)
+        let model2 = StoryItem(id: UUID(), section: "News", subsection: "News-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType2", updatedDate: nil, createdDate: nil, publishedDate: nil, materialTypeFacet: nil, kicker: nil, desFacet: nil, orgFacet: [], perFacet: [], geoFacet: [], multimedia: [], shortURL: nil)
         let model2JSON = model2.makeJSON()
         
         expect(sut, toCompleteWith: .success([model1, model2])) {
@@ -191,13 +191,12 @@ class TopStoriesServiceTest: XCTestCase {
 extension StoryItem {
     // any increase them in future
     func makeJSON() -> [String: Any] {
-        let codingKeys = TopStoriesServiceResponse.Results.CodingKeys.self
         let dict = [
             "id": self.id.uuidString,
-            codingKeys.section.rawValue: self.section,
-            codingKeys.title.rawValue: self.title,
-            codingKeys.short_url.rawValue: self.shortURL,
-            codingKeys.item_type.rawValue: self.itemType
+            "section": self.section,
+            "title": self.title,
+            "short_url": self.shortURL,
+            "item_type": self.itemType
         ].compactMapValues({$0})
         return dict
     }

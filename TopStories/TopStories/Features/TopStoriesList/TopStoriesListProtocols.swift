@@ -35,6 +35,7 @@ protocol TopStoriesListInteractorInputProtocol: AnyObject {
 protocol TopStoriesListPresenterProtocol: AnyObject {
 
     var interactor: TopStoriesListInteractorInputProtocol? { get set }
+    func viewLoaded()
 }
 
 // MARK: View -
@@ -43,4 +44,7 @@ protocol TopStoriesListViewProtocol: AnyObject {
     var presenter: TopStoriesListPresenterProtocol? { get set }
 
     /* Presenter -> ViewController */
+    func displayTopStories(_ viewModel: [StoryItemViewModel])
+    func displayErrorMessage(_ message: String)
+    func displayLoader(_ show: Bool)
 }
