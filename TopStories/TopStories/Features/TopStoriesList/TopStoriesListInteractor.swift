@@ -31,11 +31,10 @@ class TopStoriesListInteractor: TopStoriesListInteractorInputProtocol {
     private func handleFailure(with error: TopStoryServiceError) {
         switch error {
             
-       
         case .internetConnectivity:
             self.presenter?.presentConnectivityError()
         case .unAuthorized:
-            break
+            self.presenter?.presentAuthError()
         case .invalidData:
             self.presenter?.presentInvalidDataError()
         }

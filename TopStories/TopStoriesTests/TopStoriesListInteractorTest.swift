@@ -44,6 +44,19 @@ class TopStoriesListInteractorTest: XCTestCase {
     }
     
     
+    func test_getTopStories_notifiesPresenterWithAuthError_whenReceivesAuthErrorFromClient() throws {
+        let service = TopStoriesServiceSpy()
+        let presenter = PresenterSpy()
+        let sut = TopStoriesListInteractor(service: service)
+        sut.presenter = presenter
+        
+        sut.getTopStoriesList(for: "Home")
+        service.complete(with: .failure(.unAuthorized))
+        
+        XCTAssertEqual(presenter.authenticationErrorCount, 1)
+    }
+    
+    
     //MARK: - Helpers
    
     class TopStoriesServiceSpy: TopStoriesServiceProtocol {
@@ -62,6 +75,7 @@ class TopStoriesListInteractorTest: XCTestCase {
     class PresenterSpy: TopStoriesListInteractorOutputProtocol {
         var connectivityErrorCount = 0
         var invalidDataErrorCount = 0
+        var authenticationErrorCount = 0
 
         
         func presentListOfStories(_ stories: [StoryItem]) {
@@ -74,6 +88,10 @@ class TopStoriesListInteractorTest: XCTestCase {
         
         func presentInvalidDataError() {
             invalidDataErrorCount += 1
+        }
+        
+        func presentAuthError() {
+            authenticationErrorCount += 1
         }
         
     }
