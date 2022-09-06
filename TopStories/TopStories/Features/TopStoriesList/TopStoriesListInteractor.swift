@@ -17,8 +17,9 @@ class TopStoriesListInteractor: TopStoriesListInteractorInputProtocol {
     }
     
     func getTopStoriesList(for section: String) {
-        service.fetch { _ in
-            
+        service.fetch {[weak self] result in
+            guard let self = self else {return}
+            self.presenter?.presentConnectivityError()
         }
     }
 
