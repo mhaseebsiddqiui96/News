@@ -63,8 +63,9 @@ class TopStoriesListInteractorTest: XCTestCase {
         let sut = TopStoriesListInteractor(service: service)
         
         let expectedStories = [
-            StoryItem(id: UUID(), section: "Home1", subsection: "Something1", title: nil, abstract: nil, url: nil, uri: nil, byline: nil, itemType: nil, updatedDate: nil, createdDate: nil, publishedDate: nil, materialTypeFacet: nil, kicker: nil, desFacet: nil, orgFacet: nil, perFacet: nil, geoFacet: nil, multimedia: nil, shortURL: nil),
-            StoryItem(id: UUID(), section: "Home2", subsection: "Something2", title: nil, abstract: nil, url: nil, uri: nil, byline: nil, itemType: nil, updatedDate: nil, createdDate: nil, publishedDate: nil, materialTypeFacet: nil, kicker: nil, desFacet: nil, orgFacet: nil, perFacet: nil, geoFacet: nil, multimedia: nil, shortURL: nil)
+            StoryItem(id: UUID(), section: "Home1", subsection: "Something1", title: nil, abstract: nil, url: nil, uri: nil, byline: nil, itemType: nil, updatedDate: nil, createdDate: nil, publishedDate: nil, multimedia: nil),
+            
+            StoryItem(id: UUID(), section: "Home2", subsection: "Something2", title: nil, abstract: nil, url: nil, uri: nil, byline: nil, itemType: nil, updatedDate: nil, createdDate: nil, publishedDate: nil, multimedia: nil)
         ]
         sut.presenter = presenter
         

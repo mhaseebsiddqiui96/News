@@ -8,11 +8,6 @@
 import Foundation
 
 struct TopStoriesServiceResponse: Codable {
-    let status : String?
-    let copyright : String?
-    let section : String?
-    let last_updated : String?
-    let num_results : Int?
     let results : [Results]?
 
     struct Results : Codable {
@@ -28,16 +23,9 @@ struct TopStoriesServiceResponse: Codable {
         let updated_date : String?
         let created_date : String?
         let published_date : String?
-        let material_type_facet : String?
-        let kicker : String?
-        let des_facet : [String]?
-        let org_facet : [String]?
-        let per_facet : [String]?
-        let geo_facet : [String]?
+
         let multimedia : [Multimedia]?
-        let short_url : String?
-        
-        
+                
         var storyItemMedia: [StoryItem.Multimedia]? {
             return multimedia?.map({$0.storyMultiMedia})
         }
@@ -55,14 +43,7 @@ struct TopStoriesServiceResponse: Codable {
                              updatedDate: Date(),
                              createdDate: Date(),
                              publishedDate: Date(),
-                             materialTypeFacet: material_type_facet,
-                             kicker: kicker,
-                             desFacet: des_facet,
-                             orgFacet: org_facet,
-                             perFacet: per_facet,
-                             geoFacet: geo_facet,
-                             multimedia: storyItemMedia,
-                             shortURL: short_url)
+                             multimedia: storyItemMedia)
         }
 
         

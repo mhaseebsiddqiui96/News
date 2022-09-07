@@ -21,14 +21,7 @@ struct StoryItem: Equatable {
     let updatedDate: Date?
     let createdDate: Date?
     let publishedDate: Date?
-    let materialTypeFacet: String?
-    let kicker: String?
-    let desFacet: [String]?
-    let orgFacet: [String]?
-    let perFacet: [String]?
-    let geoFacet: [String]?
     let multimedia: [Multimedia]?
-    let shortURL: String?
 
     
     

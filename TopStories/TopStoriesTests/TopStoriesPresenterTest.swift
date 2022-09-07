@@ -127,9 +127,9 @@ class TopStoriesPresentTest: XCTestCase {
     
     func getDummyStories() -> [StoryItem] {
         let stories = [
-            StoryItem(id: UUID(), section: "Home1", subsection: "Something1", title: "StoryTitle1", abstract: nil, url: nil, uri: nil, byline: "by Siddiqui", itemType: nil, updatedDate: nil, createdDate: nil, publishedDate: nil, materialTypeFacet: nil, kicker: nil, desFacet: nil, orgFacet: nil, perFacet: nil, geoFacet: nil, multimedia: [StoryItem.Multimedia(url: "https://some-url2.com", format: .largeThumbnail, height: 300, width: 300, type: nil, subtype: nil, caption: nil, copyright: nil)], shortURL: nil),
+            StoryItem(id: UUID(), section: "Home1", subsection: "Something1", title: "StoryTitle1", abstract: nil, url: nil, uri: nil, byline: "by Siddiqui", itemType: nil, updatedDate: nil, createdDate: nil, publishedDate: nil, multimedia: [StoryItem.Multimedia(url: "https://some-url2.com", format: .largeThumbnail, height: 300, width: 300, type: nil, subtype: nil, caption: nil, copyright: nil)]),
             
-            StoryItem(id: UUID(), section: "Home2", subsection: "Something2", title: "StoryTitle2", abstract: nil, url: nil, uri: nil, byline: "by Haseeb", itemType: nil, updatedDate: nil, createdDate: nil, publishedDate: nil, materialTypeFacet: nil, kicker: nil, desFacet: nil, orgFacet: nil, perFacet: nil, geoFacet: nil, multimedia: [StoryItem.Multimedia(url: "https://some-url.com", format: .largeThumbnail, height: 300, width: 300, type: nil, subtype: nil, caption: nil, copyright: nil)], shortURL: nil)
+            StoryItem(id: UUID(), section: "Home2", subsection: "Something2", title: "StoryTitle2", abstract: nil, url: nil, uri: nil, byline: "by Haseeb", itemType: nil, updatedDate: nil, createdDate: nil, publishedDate: nil, multimedia: [StoryItem.Multimedia(url: "https://some-url.com", format: .largeThumbnail, height: 300, width: 300, type: nil, subtype: nil, caption: nil, copyright: nil)])
         ]
         
         return stories
