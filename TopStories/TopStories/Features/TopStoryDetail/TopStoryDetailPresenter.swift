@@ -22,6 +22,10 @@ class TopStoryDetailPresenter: TopStoryDetailPresenterProtocol, TopStoryDetailIn
         self.router = router
     }
     
+    func viewLoaded() {
+        interactor?.getTopStoryDetail()
+    }
+    
     func presentStoryDetails(_ entity: StoryItem) {
         let viewModel = StoryDetailViewModel(form: entity)
         self.storyDetailViewModel = viewModel

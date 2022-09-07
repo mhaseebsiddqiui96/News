@@ -15,6 +15,8 @@ protocol TopStoryDetailWireframeProtocol: AnyObject {
 protocol TopStoryDetailPresenterProtocol: AnyObject {
 
     var interactor: TopStoryDetailInteractorInputProtocol? { get set }
+    
+    func viewLoaded()
 }
 
 // MARK: Interactor -

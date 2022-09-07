@@ -23,6 +23,15 @@ class TopStoryDetailPresenterTest: XCTestCase {
         XCTAssertEqual(view.displayStoryDetailViewModel[0].description, "abstract1")
         XCTAssertEqual(view.displayStoryDetailViewModel[0].url, URL(string: "https://some-url.com"))
    }
+    
+    
+    func test_viewLoaded_notifierInteractorToGetStoryDetails() {
+        let (_, interactor, _, presenter) = makeSUT()
+        presenter.viewLoaded()
+        
+        XCTAssertEqual(interactor.getTopStoryDetailsCalled, 1)
+    }
+
 
     //MARK: - Helpers
     class DetailViewSpy: TopStoryDetailViewProtocol {
@@ -37,9 +46,10 @@ class TopStoryDetailPresenterTest: XCTestCase {
     
     class DetailViewInteractorSpy: TopStoryDetailInteractorInputProtocol {
         var presenter: TopStoryDetailInteractorOutputProtocol?
+        var getTopStoryDetailsCalled = 0
         
         func getTopStoryDetail() {
-            
+            getTopStoryDetailsCalled += 1
         }
     }
     
