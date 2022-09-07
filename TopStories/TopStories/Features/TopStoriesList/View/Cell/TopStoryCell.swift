@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class TopStoryCell: UITableViewCell {
 
@@ -89,6 +90,7 @@ class TopStoryCell: UITableViewCell {
     func populate(with viewModel: StoryItemViewModel) {
         self.storyAuthorLabel.text = viewModel.author
         self.storyTitleLabel.text = viewModel.title
+        self.storyThumbnailImageView.sd_setImage(with: viewModel.imageURL)
     }
 
 }

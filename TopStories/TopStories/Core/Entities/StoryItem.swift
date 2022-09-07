@@ -25,7 +25,7 @@ struct StoryItem: Equatable {
 
     
     
-    struct Multimedia {
+    struct Multimedia: Equatable {
         let url : String?
         let format : Format?
         let height : Int?
@@ -42,9 +42,4 @@ struct StoryItem: Equatable {
         }
         
     }
-    
-    static func == (lhs: StoryItem, rhs: StoryItem) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
 }

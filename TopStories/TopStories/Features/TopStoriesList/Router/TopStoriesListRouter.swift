@@ -35,8 +35,7 @@ class TopStoriesListRouter: TopStoriesListWireframeProtocol {
     }
     
     func routeToStoryDetail(with entitiy: StoryItem) {
-        
+        viewController?.navigationController?.pushViewController(TopStoryDetailRouter.createModule(entitiy), animated: true)
     }
-
     
 }
