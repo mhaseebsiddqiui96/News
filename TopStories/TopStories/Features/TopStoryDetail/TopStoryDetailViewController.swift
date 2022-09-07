@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TopStoryDetailViewController: UIViewController, TopStoryDetailViewProtocol {
+class TopStoryDetailViewController: UIViewController {
 
 	var presenter: TopStoryDetailPresenterProtocol?
     
@@ -26,5 +26,13 @@ class TopStoryDetailViewController: UIViewController, TopStoryDetailViewProtocol
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+    }
+    
+    
+}
+
+extension TopStoryDetailViewController: TopStoryDetailViewProtocol {
+    func displayStoryDetails(_ viewModel: StoryDetailViewModel) {
+        
     }
 }

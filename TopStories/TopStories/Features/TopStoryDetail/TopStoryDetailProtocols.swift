@@ -38,4 +38,5 @@ protocol TopStoryDetailViewProtocol: AnyObject {
     var presenter: TopStoryDetailPresenterProtocol? { get set }
 
     /* Presenter -> ViewController */
+    func displayStoryDetails(_ viewModel: StoryDetailViewModel)
 }

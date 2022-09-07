@@ -12,6 +12,9 @@ class TopStoryDetailPresenter: TopStoryDetailPresenterProtocol, TopStoryDetailIn
     weak private var view: TopStoryDetailViewProtocol?
     var interactor: TopStoryDetailInteractorInputProtocol?
     private let router: TopStoryDetailWireframeProtocol
+    
+    //view state
+    var storyDetailViewModel: StoryDetailViewModel?
 
     init(interface: TopStoryDetailViewProtocol, interactor: TopStoryDetailInteractorInputProtocol?, router: TopStoryDetailWireframeProtocol) {
         self.view = interface
@@ -20,7 +23,9 @@ class TopStoryDetailPresenter: TopStoryDetailPresenterProtocol, TopStoryDetailIn
     }
     
     func presentStoryDetails(_ entity: StoryItem) {
-        
+        let viewModel = StoryDetailViewModel(form: entity)
+        self.storyDetailViewModel = viewModel
+        view?.displayStoryDetails(viewModel)
     }
     
 }
