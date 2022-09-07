@@ -43,6 +43,13 @@ class TopStoriesService: TopStoriesServiceProtocol {
     }
     
     private func decodeResponse(from data: Data) -> TopStoriesServiceResponse? {
-        return try? JSONDecoder().decode(TopStoriesServiceResponse.self, from: data)
+        let decord = JSONDecoder()
+        do {
+            let response = try decord.decode(TopStoriesServiceResponse.self, from: data)
+            return response
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
     }
 }

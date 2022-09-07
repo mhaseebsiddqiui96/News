@@ -23,23 +23,9 @@ class TopStoriesListInteractor: TopStoriesListInteractorInputProtocol {
             case .success(let stories):
                 self.presenter?.presentListOfStories(stories)
             case .failure(let err):
-                self.handleFailure(with: err)
+                self.presenter?.presentError(err)
             }
         }
         
     }
-    
-    private func handleFailure(with error: TopStoryServiceError) {
-        switch error {
-            
-        case .internetConnectivity:
-            self.presenter?.presentConnectivityError()
-        case .unAuthorized:
-            self.presenter?.presentAuthError()
-        case .invalidData:
-            self.presenter?.presentInvalidDataError()
-        }
-
-    }
-
 }

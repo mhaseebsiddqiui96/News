@@ -25,9 +25,9 @@ struct TopStoriesServiceResponse: Codable {
         let uri : String?
         let byline : String?
         let item_type : String?
-        let updated_date : Date?
-        let created_date : Date?
-        let published_date : Date?
+        let updated_date : String?
+        let created_date : String?
+        let published_date : String?
         let material_type_facet : String?
         let kicker : String?
         let des_facet : [String]?
@@ -52,9 +52,9 @@ struct TopStoriesServiceResponse: Codable {
                              uri: uri,
                              byline: byline,
                              itemType: item_type,
-                             updatedDate: updated_date,
-                             createdDate: created_date,
-                             publishedDate: published_date,
+                             updatedDate: Date(),
+                             createdDate: Date(),
+                             publishedDate: Date(),
                              materialTypeFacet: material_type_facet,
                              kicker: kicker,
                              desFacet: des_facet,
@@ -100,7 +100,6 @@ struct TopStoriesServiceResponse: Codable {
                 }
             }
         }
-        
         
     }
 

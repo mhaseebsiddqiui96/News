@@ -17,9 +17,8 @@ protocol TopStoriesListInteractorOutputProtocol: AnyObject {
 
     /* Interactor -> Presenter */
     func presentListOfStories(_ stories: [StoryItem])
-    func presentConnectivityError()
-    func presentInvalidDataError()
-    func presentAuthError()
+    func presentError(_ error: TopStoryServiceError)
+
 }
 
 protocol TopStoriesListInteractorInputProtocol: AnyObject {
@@ -35,6 +34,8 @@ protocol TopStoriesListInteractorInputProtocol: AnyObject {
 protocol TopStoriesListPresenterProtocol: AnyObject {
 
     var interactor: TopStoriesListInteractorInputProtocol? { get set }
+    var title: String {get}
+    var topStories: [StoryItemViewModel] {get set}
     func viewLoaded()
 }
 

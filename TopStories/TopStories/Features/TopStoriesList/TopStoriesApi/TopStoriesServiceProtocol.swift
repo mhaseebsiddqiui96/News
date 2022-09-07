@@ -13,6 +13,19 @@ enum TopStoryServiceError: Swift.Error {
     case invalidData
 }
 
+extension TopStoryServiceError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .internetConnectivity:
+            return NSLocalizedString("Unable to connect to server!", comment: "")
+        case .invalidData:
+            return NSLocalizedString("Something went wrong!", comment: "")
+        case .unAuthorized:
+            return NSLocalizedString("You are not authorize to perform this action", comment: "")
+        }
+    }
+}
+
 protocol TopStoriesServiceProtocol {
     func fetch(completion: @escaping(Result<[StoryItem], TopStoryServiceError>) -> Void)
 }

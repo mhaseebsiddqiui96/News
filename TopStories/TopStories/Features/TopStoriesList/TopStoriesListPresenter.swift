@@ -14,8 +14,10 @@ class TopStoriesListPresenter: TopStoriesListPresenterProtocol {
     private let router: TopStoriesListWireframeProtocol
         
     // View Representation
-    let title: String = Constants.TopStoriesListStrings.navTitle
+    var title: String = Constants.TopStoriesListStrings.navTitle
     let selectedSection: String = "home" // sending home as fixed for now but can be replaces with enum case in future and user can select this option
+    var topStories: [StoryItemViewModel] = []
+
     
     init(interface: TopStoriesListViewProtocol, interactor: TopStoriesListInteractorInputProtocol?, router: TopStoriesListWireframeProtocol) {
         self.view = interface
@@ -34,19 +36,16 @@ class TopStoriesListPresenter: TopStoriesListPresenterProtocol {
 extension TopStoriesListPresenter: TopStoriesListInteractorOutputProtocol {
     func presentListOfStories(_ stories: [StoryItem]) {
         view?.displayLoader(false)
-        view?.displayTopStories(stories.map({StoryItemViewModel(from: $0)}))
+        topStories = stories.map({ item in
+            return StoryItemViewModel(from: item) {
+                self.router.routeToStoryDetail(with: item)
+            }
+        })
+        view?.displayTopStories(topStories)
     }
     
-    func presentConnectivityError() {
-        stopsLoaderAndDisplayErrorMessage(Constants.TopStoriesListStrings.connectivityErrorMessage)
-    }
-    
-    func presentInvalidDataError() {
-        stopsLoaderAndDisplayErrorMessage(Constants.TopStoriesListStrings.invalidDataMessage)
-    }
-    
-    func presentAuthError() {
-        stopsLoaderAndDisplayErrorMessage(Constants.TopStoriesListStrings.authenticationFailed)
+    func presentError(_ error: TopStoryServiceError) {
+        stopsLoaderAndDisplayErrorMessage(error.localizedDescription)
     }
     
     private func stopsLoaderAndDisplayErrorMessage(_ message: String) {
