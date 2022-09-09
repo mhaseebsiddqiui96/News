@@ -93,10 +93,7 @@ class TopStoriesViewControllerTest: XCTestCase {
             super.displayTopStories()
             reloadStoriesCalledCount += 1
         }
-        
-        override func displayErrorMessage(_ message: String) {
-            
-        }
+    
         
         override func updateCell(at index: Int, with viewModel: StoryItemViewModel) {
             

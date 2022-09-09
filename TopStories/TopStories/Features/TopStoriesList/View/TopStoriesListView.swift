@@ -72,10 +72,6 @@ class TopStoriesListView: UIView, TopStoriesListInterface, TopStoriesListViewPro
         }
     }
     
-    func displayErrorMessage(_ message: String) {
-        
-    }
-    
     func displayLoader(_ show: Bool) {
         DispatchQueue.main.async {
             if show {

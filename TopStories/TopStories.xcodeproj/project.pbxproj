@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FBC040128CB1DE2006DC5FB /* UIViewController+alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBC040028CB1DE2006DC5FB /* UIViewController+alert.swift */; };
 		0FCB214E28C69B66004D6CF9 /* TopStoriesListProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB214D28C69B66004D6CF9 /* TopStoriesListProtocols.swift */; };
 		0FCB215028C69CE7004D6CF9 /* TopStoriesListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB214F28C69CE7004D6CF9 /* TopStoriesListInteractor.swift */; };
 		0FCB215228C69DDF004D6CF9 /* TopStoriesListInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB215128C69DDF004D6CF9 /* TopStoriesListInteractorTest.swift */; };
@@ -67,6 +68,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0FBC040028CB1DE2006DC5FB /* UIViewController+alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+alert.swift"; sourceTree = "<group>"; };
 		0FCB214D28C69B66004D6CF9 /* TopStoriesListProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesListProtocols.swift; sourceTree = "<group>"; };
 		0FCB214F28C69CE7004D6CF9 /* TopStoriesListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesListInteractor.swift; sourceTree = "<group>"; };
 		0FCB215128C69DDF004D6CF9 /* TopStoriesListInteractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesListInteractorTest.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				0FCB216228C7E00B004D6CF9 /* URL+QueryItems.swift */,
 				0FCB218728C8BD90004D6CF9 /* UIView+Constraints.swift */,
 				0FCB218C28C9006F004D6CF9 /* UITableViewCell+Identifier.swift */,
+				0FBC040028CB1DE2006DC5FB /* UIViewController+alert.swift */,
 			);
 			path = Extrensions;
 			sourceTree = "<group>";
@@ -548,6 +551,7 @@
 				0FE57F0228C3777900874B3D /* AppDelegate.swift in Sources */,
 				0FCB216328C7E00B004D6CF9 /* URL+QueryItems.swift in Sources */,
 				0FCB219528C9389D004D6CF9 /* TopStoriesListViewController+TableView.swift in Sources */,
+				0FBC040128CB1DE2006DC5FB /* UIViewController+alert.swift in Sources */,
 				0FE57F4A28C3E31100874B3D /* TopStoriesServiceProtocol.swift in Sources */,
 				0FCB221128CA5E0F004D6CF9 /* InMemoryImageDataStore.swift in Sources */,
 				0FD3E5FD28C5554B006E188D /* HTTPClient.swift in Sources */,

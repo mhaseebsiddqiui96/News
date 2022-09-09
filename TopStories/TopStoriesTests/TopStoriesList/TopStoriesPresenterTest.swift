@@ -39,29 +39,29 @@ class TopStoriesPresentTest: XCTestCase {
         
     }
     
-    func test_presentInvalidDataError_notifiesViewWithErrorMessage() throws {
-        let (view, _, _, _, presenter) = makeSUT()
+    func test_presentInvalidDataError_notifiesRouterWithErrorMessage() throws {
+        let (view, _, _, router, presenter) = makeSUT()
 
         presenter.presentError(.invalidData)
-        XCTAssertEqual(view.displayErrorMessage, [TopStoryServiceError.invalidData.localizedDescription])
+        XCTAssertEqual(router.errorView, [TopStoryServiceError.invalidData.localizedDescription])
         XCTAssertEqual(view.displayLoader, [false])
 
     }
 
-    func test_presentConnctivityError_notifiesViewWithErrorMessage() throws {
-        let (view, _,_, _, presenter) = makeSUT()
+    func test_presentConnctivityError_notifiesRouterWithErrorMessage() throws {
+        let (view, _,_, router, presenter) = makeSUT()
 
         presenter.presentError(.internetConnectivity)
-        XCTAssertEqual(view.displayErrorMessage, [TopStoryServiceError.internetConnectivity.localizedDescription])
+        XCTAssertEqual(router.errorView, [TopStoryServiceError.internetConnectivity.localizedDescription])
         XCTAssertEqual(view.displayLoader, [false])
 
     }
 
-    func test_presentAuthError_notifiesViewWithErrorMessage() throws {
-        let (view, _, _, _, presenter) = makeSUT()
+    func test_presentAuthError_notifiesRouterWithErrorMessage() throws {
+        let (view, _, _, router, presenter) = makeSUT()
 
         presenter.presentError(.unAuthorized)
-        XCTAssertEqual(view.displayErrorMessage, [TopStoryServiceError.unAuthorized.localizedDescription])
+        XCTAssertEqual(router.errorView, [TopStoryServiceError.unAuthorized.localizedDescription])
         XCTAssertEqual(view.displayLoader, [false])
 
     }
@@ -115,9 +115,14 @@ class TopStoriesPresentTest: XCTestCase {
     class TopStoriesListRouterSpy: TopStoriesListWireframeProtocol {
         
         var entities: [StoryItem] = []
+        var errorView: [String] = []
         
         func routeToStoryDetail(with entitiy: StoryItem) {
             entities.append(entitiy)
+        }
+        
+        func routeToErrorView(with message: String) {
+            errorView.append(message)
         }
     }
     

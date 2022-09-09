@@ -10,6 +10,7 @@ import Foundation
 // MARK: Wireframe -
 protocol TopStoriesListWireframeProtocol: AnyObject {
     func routeToStoryDetail(with entitiy: StoryItem)
+    func routeToErrorView(with message: String)
 }
 
 // MARK: Interactor -
@@ -52,8 +53,6 @@ protocol TopStoriesListViewProtocol: AnyObject {
     
     /* Presenter -> ViewController */
     func displayTopStories()
-    func displayErrorMessage(_ message: String)
     func displayLoader(_ show: Bool)
-    
     func updateCell(at index: Int, with viewModel: StoryItemViewModel)
 }

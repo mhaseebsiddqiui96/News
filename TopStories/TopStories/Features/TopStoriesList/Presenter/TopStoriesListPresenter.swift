@@ -40,7 +40,6 @@ class TopStoriesListPresenter: TopStoriesListPresenterProtocol {
                 self.listImageLoadingInteractor?.loadImageData(at: index, for: URL)
             }
         }
-        
     }
     
     func cancelLoads(for indexs: [Int]) {
@@ -68,7 +67,7 @@ extension TopStoriesListPresenter: TopStoriesListInteractorOutputProtocol {
     
     private func stopsLoaderAndDisplayErrorMessage(_ message: String) {
         view?.displayLoader(false)
-        view?.displayErrorMessage(message)
+        router.routeToErrorView(with: message)
     }
 }
 

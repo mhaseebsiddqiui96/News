@@ -46,4 +46,9 @@ class TopStoriesListRouter: TopStoriesListWireframeProtocol {
         viewController?.navigationController?.pushViewController(TopStoryDetailRouter.createModule(entitiy), animated: true)
     }
     
+    func routeToErrorView(with message: String) {
+        viewController?.showError(message: message)
+    }
+    
+    
 }
