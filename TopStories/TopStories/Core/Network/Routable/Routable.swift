@@ -25,7 +25,6 @@ typealias APIParams = [String: String]
 typealias APIHeaders = [String: String]
 typealias APIMehtod = APIMethod
 
-
 /// This should be implemented by all concrete routers
 protocol Routable {
 
