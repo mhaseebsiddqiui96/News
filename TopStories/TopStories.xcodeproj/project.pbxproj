@@ -11,6 +11,7 @@
 		0FBC040428CB2600006DC5FB /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBC040328CB2600006DC5FB /* Localizable.swift */; };
 		0FBC040728CB2642006DC5FB /* LocalizeStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBC040628CB2642006DC5FB /* LocalizeStrings.swift */; };
 		0FBC040928CB266B006DC5FB /* Localized.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FBC040828CB266B006DC5FB /* Localized.strings */; };
+		0FBC040B28CB2822006DC5FB /* ListImageLoadingInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBC040A28CB2822006DC5FB /* ListImageLoadingInteractorTest.swift */; };
 		0FCB214E28C69B66004D6CF9 /* TopStoriesListProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB214D28C69B66004D6CF9 /* TopStoriesListProtocols.swift */; };
 		0FCB215028C69CE7004D6CF9 /* TopStoriesListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB214F28C69CE7004D6CF9 /* TopStoriesListInteractor.swift */; };
 		0FCB215228C69DDF004D6CF9 /* TopStoriesListInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB215128C69DDF004D6CF9 /* TopStoriesListInteractorTest.swift */; };
@@ -75,6 +76,7 @@
 		0FBC040328CB2600006DC5FB /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		0FBC040628CB2642006DC5FB /* LocalizeStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizeStrings.swift; sourceTree = "<group>"; };
 		0FBC040828CB266B006DC5FB /* Localized.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localized.strings; sourceTree = "<group>"; };
+		0FBC040A28CB2822006DC5FB /* ListImageLoadingInteractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListImageLoadingInteractorTest.swift; sourceTree = "<group>"; };
 		0FCB214D28C69B66004D6CF9 /* TopStoriesListProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesListProtocols.swift; sourceTree = "<group>"; };
 		0FCB214F28C69CE7004D6CF9 /* TopStoriesListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesListInteractor.swift; sourceTree = "<group>"; };
 		0FCB215128C69DDF004D6CF9 /* TopStoriesListInteractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesListInteractorTest.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				0FCB215128C69DDF004D6CF9 /* TopStoriesListInteractorTest.swift */,
 				0FCB217C28C7F37E004D6CF9 /* TopStoriesPresenterTest.swift */,
 				0FCB218E28C913CD004D6CF9 /* TopStoriesViewControllerTest.swift */,
+				0FBC040A28CB2822006DC5FB /* ListImageLoadingInteractorTest.swift */,
 			);
 			path = TopStoriesList;
 			sourceTree = "<group>";
@@ -625,6 +628,7 @@
 				0FD3E60128C5EEBB006E188D /* URLSessionClientTest.swift in Sources */,
 				0FCB215228C69DDF004D6CF9 /* TopStoriesListInteractorTest.swift in Sources */,
 				0FCB21AC28C9471F004D6CF9 /* TopStoryDetailPresenterTest.swift in Sources */,
+				0FBC040B28CB2822006DC5FB /* ListImageLoadingInteractorTest.swift in Sources */,
 				0FCB218F28C913CD004D6CF9 /* TopStoriesViewControllerTest.swift in Sources */,
 				0FCB217D28C7F37E004D6CF9 /* TopStoriesPresenterTest.swift in Sources */,
 				0FCB221328CA5F42004D6CF9 /* CachedImageLoadingService.swift in Sources */,

@@ -12,18 +12,29 @@ protocol ListImageDataLoadingInteractorProtocol: AnyObject {
     func cancelLoad(at index: Int)
 }
 
+protocol HTTPDataTask {
+    func cancel()
+    var url: URL? {get}
+}
+
+extension URLSessionDataTask: HTTPDataTask {
+    var url: URL? {
+        return self.originalRequest?.url
+    }
+}
+
 class ListImageDataLoadingInteractor: ListImageDataLoadingInteractorProtocol {
     
     let imageDataLoadingInteractor: ImageLoaderSerivceProtocol
-    var ongoingRequests = [Int: URLSessionDataTask]()
+    var ongoingRequests = [Int: HTTPDataTask]()
     var presenter: ListImageDataLoadingOutputProtocol?
 
-    init(interactor: ImageLoaderSerivceProtocol) {
-        self.imageDataLoadingInteractor = interactor
+    init(service: ImageLoaderSerivceProtocol) {
+        self.imageDataLoadingInteractor = service
     }
     
     func loadImageData(at index: Int, for url: URL) {
-        if let task = ongoingRequests[index], task.originalRequest?.url == url {
+        if let task = ongoingRequests[index], task.url == url {
             // do nothing just return from here as already request is there
             return
         }

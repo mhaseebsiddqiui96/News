@@ -25,7 +25,7 @@ class TopStoriesListRouter: TopStoriesListWireframeProtocol {
         let interactor = TopStoriesListInteractor(service: service)
         
         let listImageLoading = ListImageDataLoadingInteractor(
-            interactor: CachedImageLoadingService(
+            service: CachedImageLoadingService(
                 dataStore: InMemoryImageDataStore(),
                 serivce: ImageLoaderSerivce(client: httpClient)
             )
