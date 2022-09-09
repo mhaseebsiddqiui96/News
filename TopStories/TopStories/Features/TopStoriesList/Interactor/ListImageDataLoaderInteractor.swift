@@ -43,8 +43,10 @@ class ListImageDataLoadingInteractor: ListImageDataLoadingInteractorProtocol {
             switch result {
             case .success(let data):
                 self?.presenter?.presentImageData(at: index, having: url, with: data)
-            case .failure(let err):
-                self?.presenter?.presentError(err.localizedDescription)
+            case .failure(let err as NSError):
+                if err.code != NSURLErrorCancelled {
+                    self?.presenter?.presentError(err.localizedDescription)
+                }
             }
             self?.ongoingRequests.removeValue(forKey: index)
         }

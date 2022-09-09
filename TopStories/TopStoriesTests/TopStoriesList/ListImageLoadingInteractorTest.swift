@@ -75,6 +75,27 @@ class ListImageLoadingInteractorTest: XCTestCase {
 
     }
     
+    func test_loadImageData_callServiceIfNoOngoingRequest_presentsNoErrorOnCancelFailureFromService() throws {
+        let (sut, serviceSpy, presenterSpy) = makeSUT()
+
+        let url = URL(string: "https://some-url.com")!
+        
+        // test
+        sut.loadImageData(at: 0, for: url)
+        
+        //checking ongoing request is not nil
+        XCTAssertNotNil(sut.ongoingRequests[0])
+        
+        // assert
+        XCTAssertNotNil(serviceSpy.loadImageCalled[url])
+                
+        let error = NSError(domain: "domain", code: NSURLErrorCancelled)
+        serviceSpy.loadImageCalled[url]?(.failure(error))
+        
+        XCTAssertEqual(presenterSpy.presentErrorCalled, [])
+
+    }
+    
     func test_cancelLoad_cancelSessionDataTask() throws {
         
         let (sut, _, _) = makeSUT()

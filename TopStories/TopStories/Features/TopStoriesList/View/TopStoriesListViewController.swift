@@ -37,6 +37,7 @@ class TopStoriesListViewController: UIViewController {
         self.title = presenter?.title
         userInterface.setDelegate(self)
         userInterface.setDataSource(self)
+        
     }
 
 }
