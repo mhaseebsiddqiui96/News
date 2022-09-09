@@ -25,18 +25,18 @@ class TopStoriesViewControllerTest: XCTestCase {
     func test_displayListOfStories_notifiesViewToReloadData() throws {
         let (view, _ , sut) = makeSUT()
         _ = sut.view
-        sut.displayTopStories([])
+        view.displayTopStories([])
         XCTAssertEqual(view.reloadStoriesCalledCount, 1)
     }
     
     func test_displayLoader_notifiesView() throws {
         let (view, _ , sut) = makeSUT()
         _ = sut.view
-        sut.displayLoader(true)
+        view.displayLoader(true)
         XCTAssertEqual(view.activityIndicator, [true])
         
         view.activityIndicator.removeAll()
-        sut.displayLoader(false)
+        view.displayLoader(false)
         XCTAssertEqual(view.activityIndicator, [false])
     }
     
@@ -48,13 +48,13 @@ class TopStoriesViewControllerTest: XCTestCase {
             StoryItemViewModel(imageURL: URL(string: "https://some-url2.com")!, title: "title2", author: "author2", didTap: {})
         ]
 
-        sut.displayTopStories([])
+        view.displayTopStories([])
         XCTAssertEqual(view.tableViewStories.numberOfCells(), 2)
         XCTAssertEqual(view.tableViewStories.cell(for: 0)?.storyTitleLabel.text, "title1")
         XCTAssertEqual(view.tableViewStories.cell(for: 0)?.storyAuthorLabel.text, "author1")
     }
     
-    func test_didSelectCell_callsViewDidTap() throws {
+    func test_didSelectCell_callsViewModelDidTap() throws {
         let (view, presenter, sut) = makeSUT()
         _ = sut.view
         
@@ -64,7 +64,7 @@ class TopStoriesViewControllerTest: XCTestCase {
             StoryItemViewModel(imageURL: URL(string: "https://some-url2.com")!, title: "title2", author: "author2", didTap: {didTapForViewModel = "vm2"})
         ]
 
-        sut.displayTopStories([])
+        view.displayTopStories([])
         
         view.tableViewStories.didSelectRow(at: 0)
         XCTAssertEqual(didTapForViewModel, "vm1")
@@ -76,20 +76,30 @@ class TopStoriesViewControllerTest: XCTestCase {
         
     //MARK: - Helpers
     class TopStoriesListViewSpy: TopStoriesListView {
+    
         
-        var dataSources = [UITableViewDataSource]()
+
+        var dataSources = [UITableViewDataSource & UITableViewDataSourcePrefetching]()
         var delegates = [UITableViewDelegate]()
         var reloadStoriesCalledCount = 0
         var activityIndicator: [Bool] = []
 
-        override func showActivityIndicator(_ show: Bool) {
-            super.showActivityIndicator(show)
+
+        override func displayLoader(_ show: Bool) {
             activityIndicator.append(show)
         }
+
+        override func displayTopStories(_ viewModel: [StoryItemViewModel]) {
+            super.displayTopStories(viewModel)
+            reloadStoriesCalledCount += 1
+        }
         
-        override func setDataSource(_ source: UITableViewDataSource) {
-            super.setDataSource(source)
-            dataSources.append(source)
+        override func displayErrorMessage(_ message: String) {
+            
+        }
+        
+        override func updateCell(at index: Int, with viewModel: StoryItemViewModel) {
+            
         }
         
         override func setDelegate(_ source: UITableViewDelegate) {
@@ -97,15 +107,16 @@ class TopStoriesViewControllerTest: XCTestCase {
             delegates.append(source)
         }
         
-        override func reloadListOfStories() {
-            super.reloadListOfStories()
-            reloadStoriesCalledCount += 1
+        override func setDataSource(_ source: UITableViewDataSource & UITableViewDataSourcePrefetching) {
+            super.setDataSource(source)
+            self.dataSources.append(source)
         }
-        
+
     }
     
     
     class PresenterSpy: TopStoriesListPresenterProtocol {
+        
         
         var viewLoeadedCalledCount = 0
 
@@ -118,6 +129,15 @@ class TopStoriesViewControllerTest: XCTestCase {
         func viewLoaded() {
             viewLoeadedCalledCount += 1
         }
+        
+        func loadImages(for indexs: [Int]) {
+            
+        }
+        
+        func cancelLoads(for indexs: [Int]) {
+            
+        }
+        
     }
     
     func makeSUT() -> (view: TopStoriesListViewSpy, presenter: PresenterSpy, controller: TopStoriesListViewController) {

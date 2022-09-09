@@ -10,8 +10,10 @@ import UIKit
 class TopStoryDetailViewController: UIViewController {
 
 	var presenter: TopStoryDetailPresenterProtocol?
-    
-    init() {
+    let userInterface: TopStoryDetailInterfaceView
+
+    init(interface: TopStoryDetailInterfaceView) {
+        self.userInterface = interface
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -20,19 +22,26 @@ class TopStoryDetailViewController: UIViewController {
     }
     
     override func loadView() {
-        super.loadView()
+        self.view = userInterface
     }
     
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        presenter?.viewLoaded()
+        setupUI()
+        listenEventsFromView()
+    }
+    
+    fileprivate func setupUI() {
+        self.title = presenter?.title ?? "--"
+    }
+    
+    fileprivate func listenEventsFromView() {
+        userInterface.seeMoreTapped = {[weak self] in
+            self?.presenter?.seeMoreTapped()
+        }
     }
     
     
-}
-
-extension TopStoryDetailViewController: TopStoryDetailViewProtocol {
-    func displayStoryDetails(_ viewModel: StoryDetailViewModel) {
-        
-    }
 }

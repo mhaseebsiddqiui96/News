@@ -63,9 +63,9 @@ class TopStoriesListInteractorTest: XCTestCase {
         let sut = TopStoriesListInteractor(service: service)
         
         let expectedStories = [
-            StoryItem(id: UUID(), section: "Home1", subsection: "Something1", title: nil, abstract: nil, url: nil, uri: nil, byline: nil, itemType: nil, updatedDate: nil, createdDate: nil, publishedDate: nil, multimedia: nil),
+            StoryItem(id: UUID(), section: "Home1", subsection: "Something1", title: nil, abstract: nil, url: nil, uri: nil, byline: nil, itemType: nil, multimedia: nil),
             
-            StoryItem(id: UUID(), section: "Home2", subsection: "Something2", title: nil, abstract: nil, url: nil, uri: nil, byline: nil, itemType: nil, updatedDate: nil, createdDate: nil, publishedDate: nil, multimedia: nil)
+            StoryItem(id: UUID(), section: "Home2", subsection: "Something2", title: nil, abstract: nil, url: nil, uri: nil, byline: nil, itemType: nil, multimedia: nil)
         ]
         sut.presenter = presenter
         
@@ -79,10 +79,10 @@ class TopStoriesListInteractorTest: XCTestCase {
     //MARK: - Helpers
    
     class TopStoriesServiceSpy: TopStoriesServiceProtocol {
-     
+        
         var capturedCompletions: [(Result<[StoryItem], TopStoryServiceError>) -> Void] = []
         
-        func fetch(completion: @escaping (Result<[StoryItem], TopStoryServiceError>) -> Void) {
+        func fetch(urlRequest: URLRequest, completion: @escaping (Result<[StoryItem], TopStoryServiceError>) -> Void) {
             self.capturedCompletions.append(completion)
         }
         

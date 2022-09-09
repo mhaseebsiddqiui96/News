@@ -17,7 +17,7 @@ class URLSessionClient: HTTPClient {
     
     struct UnExpectedResultError: Error {}
     
-    func perform(urlRequest: URLRequest, completion: @escaping (HTTPClientResult) -> Void) {
+    func perform(urlRequest: URLRequest, completion: @escaping (HTTPClientResult) -> Void) -> URLSessionDataTask {
         let task = session.dataTask(with: urlRequest) { data, response, err in
             if let err = err {
                 completion(.failure(err))
@@ -29,5 +29,6 @@ class URLSessionClient: HTTPClient {
         }
         
         task.resume()
+        return task
     }
 }

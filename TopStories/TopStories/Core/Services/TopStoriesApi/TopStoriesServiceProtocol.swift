@@ -27,5 +27,5 @@ extension TopStoryServiceError: LocalizedError {
 }
 
 protocol TopStoriesServiceProtocol {
-    func fetch(completion: @escaping(Result<[StoryItem], TopStoryServiceError>) -> Void)
+    func fetch(urlRequest: URLRequest, completion: @escaping(Result<[StoryItem], TopStoryServiceError>) -> Void)
 }

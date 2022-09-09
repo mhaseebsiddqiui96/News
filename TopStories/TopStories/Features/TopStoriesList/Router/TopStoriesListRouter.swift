@@ -17,18 +17,26 @@ class TopStoriesListRouter: TopStoriesListWireframeProtocol {
         let view = TopStoriesListView()
         let viewController = TopStoriesListViewController(interface: view)
         
+        let httpClient = URLSessionClient()
         let service = TopStoriesService(
-            client: URLSessionClient(),
-            urlRequest: TopStoriesEndPoint.getTopStories(for: "home").asURLRequest()
+            client: httpClient
         )
         
         let interactor = TopStoriesListInteractor(service: service)
         
+        let listImageLoading = ListImageDataLoadingInteractor(
+            interactor: CachedImageLoadingService(
+                dataStore: InMemoryImageDataStore(),
+                serivce: ImageLoaderSerivce(client: httpClient)
+            )
+        )
+        
         let router = TopStoriesListRouter()
-        let presenter = TopStoriesListPresenter(interface: viewController, interactor: interactor, router: router)
+        let presenter = TopStoriesListPresenter(interface: view, interactor: interactor, listImageLoadingInteractor: listImageLoading, router: router)
 
         viewController.presenter = presenter
         interactor.presenter = presenter
+        listImageLoading.presenter = presenter
         router.viewController = viewController
 
         return viewController

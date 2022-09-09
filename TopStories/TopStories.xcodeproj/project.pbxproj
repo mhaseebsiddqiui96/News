@@ -24,7 +24,6 @@
 		0FCB218B28C8FEBD004D6CF9 /* TopStoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB218A28C8FEBD004D6CF9 /* TopStoryCell.swift */; };
 		0FCB218D28C9006F004D6CF9 /* UITableViewCell+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB218C28C9006F004D6CF9 /* UITableViewCell+Identifier.swift */; };
 		0FCB218F28C913CD004D6CF9 /* TopStoriesViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB218E28C913CD004D6CF9 /* TopStoriesViewControllerTest.swift */; };
-		0FCB219328C936E4004D6CF9 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0FCB219228C936E4004D6CF9 /* SDWebImage */; };
 		0FCB219528C9389D004D6CF9 /* TopStoriesListViewController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB219428C9389D004D6CF9 /* TopStoriesListViewController+TableView.swift */; };
 		0FCB21A128C93CCE004D6CF9 /* TopStoryDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB219B28C93CCE004D6CF9 /* TopStoryDetailPresenter.swift */; };
 		0FCB21A228C93CCE004D6CF9 /* TopStoryDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB219C28C93CCE004D6CF9 /* TopStoryDetailRouter.swift */; };
@@ -34,6 +33,16 @@
 		0FCB21AA28C94419004D6CF9 /* TopStoryDetailInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB21A928C94419004D6CF9 /* TopStoryDetailInteractorTest.swift */; };
 		0FCB21AC28C9471F004D6CF9 /* TopStoryDetailPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB21AB28C9471F004D6CF9 /* TopStoryDetailPresenterTest.swift */; };
 		0FCB21AF28C94819004D6CF9 /* StoryDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB21AE28C94819004D6CF9 /* StoryDetailViewModel.swift */; };
+		0FCB21B128C94F2E004D6CF9 /* TopStoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB21B028C94F2E004D6CF9 /* TopStoryDetailView.swift */; };
+		0FCB220328CA52E1004D6CF9 /* ImageLoaderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB220228CA52E0004D6CF9 /* ImageLoaderService.swift */; };
+		0FCB220528CA52FE004D6CF9 /* ImageLoaderApiTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB220428CA52FE004D6CF9 /* ImageLoaderApiTest.swift */; };
+		0FCB220728CA585C004D6CF9 /* ImageLoaderServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB220628CA585C004D6CF9 /* ImageLoaderServiceProtocol.swift */; };
+		0FCB220A28CA58EC004D6CF9 /* CachedImageLoadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB220928CA58EC004D6CF9 /* CachedImageLoadingService.swift */; };
+		0FCB220F28CA5DC0004D6CF9 /* ImageDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB220E28CA5DC0004D6CF9 /* ImageDataStore.swift */; };
+		0FCB221128CA5E0F004D6CF9 /* InMemoryImageDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB221028CA5E0F004D6CF9 /* InMemoryImageDataStore.swift */; };
+		0FCB221328CA5F42004D6CF9 /* CachedImageLoadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB221228CA5F41004D6CF9 /* CachedImageLoadingService.swift */; };
+		0FCB221528CA6F67004D6CF9 /* ListImageDataLoaderInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB221428CA6F67004D6CF9 /* ListImageDataLoaderInteractor.swift */; };
+		0FCB221728CA9C22004D6CF9 /* TopStoryDetailViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB221628CA9C22004D6CF9 /* TopStoryDetailViewTest.swift */; };
 		0FD3E5F728C501D3006E188D /* StoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD3E5F628C501D3006E188D /* StoryItem.swift */; };
 		0FD3E5F928C550F2006E188D /* TopStoriesServiceResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD3E5F828C550F2006E188D /* TopStoriesServiceResponseModel.swift */; };
 		0FD3E5FD28C5554B006E188D /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD3E5FC28C5554B006E188D /* HTTPClient.swift */; };
@@ -84,6 +93,16 @@
 		0FCB21A928C94419004D6CF9 /* TopStoryDetailInteractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoryDetailInteractorTest.swift; sourceTree = "<group>"; };
 		0FCB21AB28C9471F004D6CF9 /* TopStoryDetailPresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoryDetailPresenterTest.swift; sourceTree = "<group>"; };
 		0FCB21AE28C94819004D6CF9 /* StoryDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDetailViewModel.swift; sourceTree = "<group>"; };
+		0FCB21B028C94F2E004D6CF9 /* TopStoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoryDetailView.swift; sourceTree = "<group>"; };
+		0FCB220228CA52E0004D6CF9 /* ImageLoaderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoaderService.swift; sourceTree = "<group>"; };
+		0FCB220428CA52FE004D6CF9 /* ImageLoaderApiTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoaderApiTest.swift; sourceTree = "<group>"; };
+		0FCB220628CA585C004D6CF9 /* ImageLoaderServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoaderServiceProtocol.swift; sourceTree = "<group>"; };
+		0FCB220928CA58EC004D6CF9 /* CachedImageLoadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedImageLoadingService.swift; sourceTree = "<group>"; };
+		0FCB220E28CA5DC0004D6CF9 /* ImageDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataStore.swift; sourceTree = "<group>"; };
+		0FCB221028CA5E0F004D6CF9 /* InMemoryImageDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryImageDataStore.swift; sourceTree = "<group>"; };
+		0FCB221228CA5F41004D6CF9 /* CachedImageLoadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedImageLoadingService.swift; sourceTree = "<group>"; };
+		0FCB221428CA6F67004D6CF9 /* ListImageDataLoaderInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListImageDataLoaderInteractor.swift; sourceTree = "<group>"; };
+		0FCB221628CA9C22004D6CF9 /* TopStoryDetailViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoryDetailViewTest.swift; sourceTree = "<group>"; };
 		0FD3E5F628C501D3006E188D /* StoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryItem.swift; sourceTree = "<group>"; };
 		0FD3E5F828C550F2006E188D /* TopStoriesServiceResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesServiceResponseModel.swift; sourceTree = "<group>"; };
 		0FD3E5FC28C5554B006E188D /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
@@ -105,7 +124,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0FCB219328C936E4004D6CF9 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,12 +183,10 @@
 		0FCB219028C93627004D6CF9 /* TopStoryDetail */ = {
 			isa = PBXGroup;
 			children = (
-				0FCB21AD28C947FE004D6CF9 /* ViewModel */,
-				0FCB219B28C93CCE004D6CF9 /* TopStoryDetailPresenter.swift */,
-				0FCB219C28C93CCE004D6CF9 /* TopStoryDetailRouter.swift */,
-				0FCB219D28C93CCE004D6CF9 /* TopStoryDetailViewController.swift */,
-				0FCB219E28C93CCE004D6CF9 /* TopStoryDetailProtocols.swift */,
-				0FCB219F28C93CCE004D6CF9 /* TopStoryDetailInteractor.swift */,
+				0FCB21B528C9C413004D6CF9 /* Router */,
+				0FCB21B228C9C3EF004D6CF9 /* Presenter */,
+				0FCB21B428C9C409004D6CF9 /* Interactor */,
+				0FCB21B328C9C400004D6CF9 /* View */,
 			);
 			path = TopStoryDetail;
 			sourceTree = "<group>";
@@ -189,6 +205,7 @@
 		0FCB219728C938E3004D6CF9 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				0FCB220128CA52BA004D6CF9 /* ImageLoaderApi */,
 				0FD3E5F428C49EDA006E188D /* TopStoriesApi */,
 			);
 			path = Services;
@@ -198,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				0FCB214F28C69CE7004D6CF9 /* TopStoriesListInteractor.swift */,
+				0FCB221428CA6F67004D6CF9 /* ListImageDataLoaderInteractor.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -235,6 +253,7 @@
 			children = (
 				0FCB21A928C94419004D6CF9 /* TopStoryDetailInteractorTest.swift */,
 				0FCB21AB28C9471F004D6CF9 /* TopStoryDetailPresenterTest.swift */,
+				0FCB221628CA9C22004D6CF9 /* TopStoryDetailViewTest.swift */,
 			);
 			path = TopStoryDetail;
 			sourceTree = "<group>";
@@ -245,6 +264,76 @@
 				0FCB21AE28C94819004D6CF9 /* StoryDetailViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		0FCB21B228C9C3EF004D6CF9 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				0FCB21AD28C947FE004D6CF9 /* ViewModel */,
+				0FCB219B28C93CCE004D6CF9 /* TopStoryDetailPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		0FCB21B328C9C400004D6CF9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0FCB219D28C93CCE004D6CF9 /* TopStoryDetailViewController.swift */,
+				0FCB21B028C94F2E004D6CF9 /* TopStoryDetailView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0FCB21B428C9C409004D6CF9 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				0FCB219F28C93CCE004D6CF9 /* TopStoryDetailInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		0FCB21B528C9C413004D6CF9 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				0FCB219C28C93CCE004D6CF9 /* TopStoryDetailRouter.swift */,
+				0FCB219E28C93CCE004D6CF9 /* TopStoryDetailProtocols.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		0FCB220128CA52BA004D6CF9 /* ImageLoaderApi */ = {
+			isa = PBXGroup;
+			children = (
+				0FCB220628CA585C004D6CF9 /* ImageLoaderServiceProtocol.swift */,
+				0FCB220228CA52E0004D6CF9 /* ImageLoaderService.swift */,
+				0FCB220928CA58EC004D6CF9 /* CachedImageLoadingService.swift */,
+			);
+			path = ImageLoaderApi;
+			sourceTree = "<group>";
+		};
+		0FCB220C28CA5D45004D6CF9 /* DataStore */ = {
+			isa = PBXGroup;
+			children = (
+				0FCB220D28CA5D95004D6CF9 /* ImageDataStore */,
+			);
+			path = DataStore;
+			sourceTree = "<group>";
+		};
+		0FCB220D28CA5D95004D6CF9 /* ImageDataStore */ = {
+			isa = PBXGroup;
+			children = (
+				0FCB220E28CA5DC0004D6CF9 /* ImageDataStore.swift */,
+				0FCB221028CA5E0F004D6CF9 /* InMemoryImageDataStore.swift */,
+			);
+			path = ImageDataStore;
+			sourceTree = "<group>";
+		};
+		0FCB221828CAA340004D6CF9 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				0FE57F0128C3777900874B3D /* AppDelegate.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 		0FD3E5F428C49EDA006E188D /* TopStoriesApi */ = {
@@ -282,6 +371,7 @@
 				0FCB219728C938E3004D6CF9 /* Services */,
 				0FD3E5FA28C55529006E188D /* Network */,
 				0FD3E5F528C501AA006E188D /* Entities */,
+				0FCB220C28CA5D45004D6CF9 /* DataStore */,
 				0FCB216128C7DFB9004D6CF9 /* Extrensions */,
 			);
 			path = Core;
@@ -310,7 +400,7 @@
 			children = (
 				0FD3E5FB28C55535006E188D /* Core */,
 				0FE57F3728C3E04500874B3D /* Features */,
-				0FE57F0128C3777900874B3D /* AppDelegate.swift */,
+				0FCB221828CAA340004D6CF9 /* App */,
 				0FE57F0A28C3777C00874B3D /* Assets.xcassets */,
 				0FE57F0C28C3777C00874B3D /* LaunchScreen.storyboard */,
 				0FE57F0F28C3777C00874B3D /* Info.plist */,
@@ -345,6 +435,8 @@
 				0FCB21A828C943C9004D6CF9 /* TopStoryDetail */,
 				0FE57F4028C3E1C400874B3D /* TopStoriesServiceTest.swift */,
 				0FD3E60028C5EEBB006E188D /* URLSessionClientTest.swift */,
+				0FCB220428CA52FE004D6CF9 /* ImageLoaderApiTest.swift */,
+				0FCB221228CA5F41004D6CF9 /* CachedImageLoadingService.swift */,
 			);
 			path = TopStoriesTests;
 			sourceTree = "<group>";
@@ -366,7 +458,6 @@
 			);
 			name = TopStories;
 			packageProductDependencies = (
-				0FCB219228C936E4004D6CF9 /* SDWebImage */,
 			);
 			productName = TopStories;
 			productReference = 0FE57EFE28C3777900874B3D /* TopStories.app */;
@@ -419,7 +510,6 @@
 			);
 			mainGroup = 0FE57EF528C3777900874B3D;
 			packageReferences = (
-				0FCB219128C936E3004D6CF9 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = 0FE57EFF28C3777900874B3D /* Products */;
 			projectDirPath = "";
@@ -459,26 +549,33 @@
 				0FCB216328C7E00B004D6CF9 /* URL+QueryItems.swift in Sources */,
 				0FCB219528C9389D004D6CF9 /* TopStoriesListViewController+TableView.swift in Sources */,
 				0FE57F4A28C3E31100874B3D /* TopStoriesServiceProtocol.swift in Sources */,
+				0FCB221128CA5E0F004D6CF9 /* InMemoryImageDataStore.swift in Sources */,
 				0FD3E5FD28C5554B006E188D /* HTTPClient.swift in Sources */,
 				0FCB218228C80B18004D6CF9 /* TopStoriesListViewController.swift in Sources */,
 				0FCB218D28C9006F004D6CF9 /* UITableViewCell+Identifier.swift in Sources */,
 				0FCB216528C7EEE1004D6CF9 /* TopStoriesListPresenter.swift in Sources */,
 				0FD3E5F728C501D3006E188D /* StoryItem.swift in Sources */,
+				0FCB220A28CA58EC004D6CF9 /* CachedImageLoadingService.swift in Sources */,
 				0FCB21A528C93CCE004D6CF9 /* TopStoryDetailInteractor.swift in Sources */,
 				0FCB215028C69CE7004D6CF9 /* TopStoriesListInteractor.swift in Sources */,
 				0FD3E5FF28C560AA006E188D /* URLSessionClient.swift in Sources */,
+				0FCB221528CA6F67004D6CF9 /* ListImageDataLoaderInteractor.swift in Sources */,
 				0FCB218B28C8FEBD004D6CF9 /* TopStoryCell.swift in Sources */,
 				0FCB214E28C69B66004D6CF9 /* TopStoriesListProtocols.swift in Sources */,
 				0FCB216028C7D678004D6CF9 /* Routable.swift in Sources */,
+				0FCB220F28CA5DC0004D6CF9 /* ImageDataStore.swift in Sources */,
 				0FD3E5F928C550F2006E188D /* TopStoriesServiceResponseModel.swift in Sources */,
 				0FCB21A328C93CCE004D6CF9 /* TopStoryDetailViewController.swift in Sources */,
+				0FCB21B128C94F2E004D6CF9 /* TopStoryDetailView.swift in Sources */,
 				0FCB21AF28C94819004D6CF9 /* StoryDetailViewModel.swift in Sources */,
 				0FCB21A128C93CCE004D6CF9 /* TopStoryDetailPresenter.swift in Sources */,
 				0FCB215428C6B173004D6CF9 /* TopStoriesEndPoint.swift in Sources */,
+				0FCB220728CA585C004D6CF9 /* ImageLoaderServiceProtocol.swift in Sources */,
 				0FCB21A428C93CCE004D6CF9 /* TopStoryDetailProtocols.swift in Sources */,
 				0FE57F4828C3E2AF00874B3D /* TopStoriesService.swift in Sources */,
 				0FCB215A28C7C3E8004D6CF9 /* Constants.swift in Sources */,
 				0FCB218028C7F6B3004D6CF9 /* TopStoryViewModel.swift in Sources */,
+				0FCB220328CA52E1004D6CF9 /* ImageLoaderService.swift in Sources */,
 				0FCB218828C8BD90004D6CF9 /* UIView+Constraints.swift in Sources */,
 				0FCB21A228C93CCE004D6CF9 /* TopStoryDetailRouter.swift in Sources */,
 				0FCB218628C8BD04004D6CF9 /* TopStoriesListView.swift in Sources */,
@@ -491,12 +588,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FE57F4128C3E1C400874B3D /* TopStoriesServiceTest.swift in Sources */,
+				0FCB221728CA9C22004D6CF9 /* TopStoryDetailViewTest.swift in Sources */,
 				0FCB21AA28C94419004D6CF9 /* TopStoryDetailInteractorTest.swift in Sources */,
 				0FD3E60128C5EEBB006E188D /* URLSessionClientTest.swift in Sources */,
 				0FCB215228C69DDF004D6CF9 /* TopStoriesListInteractorTest.swift in Sources */,
 				0FCB21AC28C9471F004D6CF9 /* TopStoryDetailPresenterTest.swift in Sources */,
 				0FCB218F28C913CD004D6CF9 /* TopStoriesViewControllerTest.swift in Sources */,
 				0FCB217D28C7F37E004D6CF9 /* TopStoriesPresenterTest.swift in Sources */,
+				0FCB221328CA5F42004D6CF9 /* CachedImageLoadingService.swift in Sources */,
+				0FCB220528CA52FE004D6CF9 /* ImageLoaderApiTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -759,25 +859,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		0FCB219128C936E3004D6CF9 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		0FCB219228C936E4004D6CF9 /* SDWebImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0FCB219128C936E3004D6CF9 /* XCRemoteSwiftPackageReference "SDWebImage" */;
-			productName = SDWebImage;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0FE57EF628C3777900874B3D /* Project object */;
 }

@@ -17,4 +17,8 @@ struct Constants {
     struct TopStoriesListStrings {        
         static let navTitle: String = "#Top Stories"
     }
+    
+    struct StoryDetailsStrings {
+        static let navTitle: String = "Story Details"
+    }
 }

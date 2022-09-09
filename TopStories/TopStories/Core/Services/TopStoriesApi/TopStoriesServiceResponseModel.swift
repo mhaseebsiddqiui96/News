@@ -20,10 +20,6 @@ struct TopStoriesServiceResponse: Codable {
         let uri : String?
         let byline : String?
         let item_type : String?
-        let updated_date : String?
-        let created_date : String?
-        let published_date : String?
-
         let multimedia : [Multimedia]?
                 
         var storyItemMedia: [StoryItem.Multimedia]? {
@@ -40,9 +36,6 @@ struct TopStoriesServiceResponse: Codable {
                              uri: uri,
                              byline: byline,
                              itemType: item_type,
-                             updatedDate: Date(),
-                             createdDate: Date(),
-                             publishedDate: Date(),
                              multimedia: storyItemMedia)
         }
 

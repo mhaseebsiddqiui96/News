@@ -10,5 +10,6 @@ import Foundation
 typealias HTTPClientResult = Result<(data: Data, response: HTTPURLResponse), Error>
 
 protocol HTTPClient {
-    func perform(urlRequest: URLRequest, completion: @escaping(HTTPClientResult) -> Void)
+    @discardableResult
+    func perform(urlRequest: URLRequest, completion: @escaping(HTTPClientResult) -> Void) -> URLSessionDataTask
 }

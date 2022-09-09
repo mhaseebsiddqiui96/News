@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 class TopStoryCell: UITableViewCell {
 
@@ -35,6 +34,8 @@ class TopStoryCell: UITableViewCell {
         return label
     }()
     
+    var onPrepareToReUse: (() -> Void)?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier:  "\(TopStoryCell.self)")
         setupView()
@@ -42,6 +43,12 @@ class TopStoryCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        storyThumbnailImageView.image = nil
+        onPrepareToReUse?()
     }
 
     
@@ -90,7 +97,9 @@ class TopStoryCell: UITableViewCell {
     func populate(with viewModel: StoryItemViewModel) {
         self.storyAuthorLabel.text = viewModel.author
         self.storyTitleLabel.text = viewModel.title
-        self.storyThumbnailImageView.sd_setImage(with: viewModel.imageURL)
+        if let imgData = viewModel.imgData, let img = UIImage(data: imgData) {
+            self.storyThumbnailImageView.image = img
+        }
     }
 
 }

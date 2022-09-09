@@ -15,6 +15,7 @@ class TopStoryDetailPresenter: TopStoryDetailPresenterProtocol, TopStoryDetailIn
     
     //view state
     var storyDetailViewModel: StoryDetailViewModel?
+    var title: String = Constants.StoryDetailsStrings.navTitle
 
     init(interface: TopStoryDetailViewProtocol, interactor: TopStoryDetailInteractorInputProtocol?, router: TopStoryDetailWireframeProtocol) {
         self.view = interface
@@ -26,10 +27,23 @@ class TopStoryDetailPresenter: TopStoryDetailPresenterProtocol, TopStoryDetailIn
         interactor?.getTopStoryDetail()
     }
     
+    func seeMoreTapped() {
+        if let url = storyDetailViewModel?.completeStoryURL {
+            router.routeToSeeMore(with: url)
+        }
+    }
+    
     func presentStoryDetails(_ entity: StoryItem) {
         let viewModel = StoryDetailViewModel(form: entity)
         self.storyDetailViewModel = viewModel
         view?.displayStoryDetails(viewModel)
+    }
+    
+    func presentImageData(_ data: Data) {
+        var viewModel = storyDetailViewModel
+        viewModel?.imgData = data
+        storyDetailViewModel = viewModel
+        view?.displayImage(data)
     }
     
 }

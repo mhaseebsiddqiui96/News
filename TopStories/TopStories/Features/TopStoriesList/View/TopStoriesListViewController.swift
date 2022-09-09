@@ -41,19 +41,3 @@ class TopStoriesListViewController: UIViewController {
 
 }
 
-//MARK: - Preenter -> View
-extension TopStoriesListViewController: TopStoriesListViewProtocol {
-    
-    func displayTopStories(_ viewModel: [StoryItemViewModel]) {
-        userInterface.reloadListOfStories()
-    }
-    
-    func displayErrorMessage(_ message: String) {
-        
-    }
-    
-    func displayLoader(_ show: Bool) {
-        userInterface.showActivityIndicator(show)
-    }
-}
-

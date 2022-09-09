@@ -17,7 +17,8 @@ class TopStoriesListInteractor: TopStoriesListInteractorInputProtocol {
     }
     
     func getTopStoriesList(for section: String) {
-        service.fetch {[weak self] result in
+        let urlRequest = TopStoriesEndPoint.getTopStories(for: section).asURLRequest()
+        service.fetch(urlRequest: urlRequest) {[weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let stories):

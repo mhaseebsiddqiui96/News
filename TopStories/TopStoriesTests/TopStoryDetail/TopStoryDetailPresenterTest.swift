@@ -10,10 +10,10 @@ import XCTest
 
 class TopStoryDetailPresenterTest: XCTestCase {
     
-    func test_presentListOfStories_notifiesViewWithListOfViewModels() throws {
+    func test_presentStoryDetail_notifiesViewWithListOfViewModels() throws {
         let (view, _, _, sut) = makeSUT()
        
-        let entity = StoryItem(id: UUID(), section: "section1", subsection: "subsection1", title: "title1", abstract: "abstract1", url: "https://some-url.com", uri: nil, byline: "by haseeb", itemType: nil, updatedDate: Date(), createdDate: Date(), publishedDate: Date(), multimedia: nil)
+        let entity = StoryItem(id: UUID(), section: "section1", subsection: "subsection1", title: "title1", abstract: "abstract1", url: "https://some-url.com", uri: nil, byline: "by haseeb", itemType: nil, multimedia: [StoryItem.Multimedia(url: "https://some-url.com", format: .superJumbo, height: 0, width: 0, type: nil, subtype: nil, caption: nil, copyright: nil)])
         
         sut.presentStoryDetails(entity)
         
@@ -42,6 +42,11 @@ class TopStoryDetailPresenterTest: XCTestCase {
         func displayStoryDetails(_ viewModel: StoryDetailViewModel) {
             displayStoryDetailViewModel.append(viewModel)
         }
+        
+        func displayImage(_ data: Data) {
+            
+        }
+    
     }
     
     class DetailViewInteractorSpy: TopStoryDetailInteractorInputProtocol {
@@ -54,6 +59,9 @@ class TopStoryDetailPresenterTest: XCTestCase {
     }
     
     class RouterSpy: TopStoryDetailWireframeProtocol {
+        func routeToSeeMore(with URL: URL) {
+            
+        }
         
     }
     

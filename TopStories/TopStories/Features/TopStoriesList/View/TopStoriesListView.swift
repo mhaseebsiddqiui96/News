@@ -10,16 +10,14 @@ import UIKit
 typealias TopStoriesListInterfaceView = TopStoriesListInterface & UIView
 
 protocol TopStoriesListInterface: AnyObject {
-    func showActivityIndicator(_ show: Bool)
-    func setDataSource(_ source: UITableViewDataSource)
+    func setDataSource(_ source: UITableViewDataSource & UITableViewDataSourcePrefetching)
     func setDelegate(_ source: UITableViewDelegate)
-    func reloadListOfStories()
 }
 
-class TopStoriesListView: UIView, TopStoriesListInterface {
+class TopStoriesListView: UIView, TopStoriesListInterface, TopStoriesListViewProtocol {
 
     // views
-    let tableViewStories: UITableView = {
+    lazy var tableViewStories: UITableView = {
         let tableView = UITableView()
         tableView.register(TopStoryCell.self, forCellReuseIdentifier: "\(TopStoryCell.self)")
         tableView.separatorStyle = .singleLine
@@ -44,19 +42,16 @@ class TopStoriesListView: UIView, TopStoriesListInterface {
         addSubviewAndPinEdges(tableViewStories)
     }
     
-    func setDataSource(_ source: UITableViewDataSource) {
+    func setDataSource(_ source: UITableViewDataSource & UITableViewDataSourcePrefetching) {
         tableViewStories.dataSource = source
+        tableViewStories.prefetchDataSource = source
     }
     
     func setDelegate(_ source: UITableViewDelegate) {
         tableViewStories.delegate = source
     }
 
-    func reloadListOfStories() {
-        DispatchQueue.main.async {
-            self.tableViewStories.reloadData()
-        }
-    }
+    
     
     
     func addAcitivityIndicator() {
@@ -69,8 +64,19 @@ class TopStoriesListView: UIView, TopStoriesListInterface {
                                      activityView.centerYAnchor.constraint(equalTo: centerYAnchor)])
 
     }
+
+    //Presenter -> View
+    func displayTopStories(_ viewModel: [StoryItemViewModel]) {
+        DispatchQueue.main.async {
+            self.tableViewStories.reloadData()
+        }
+    }
     
-    func showActivityIndicator(_ show: Bool) {
+    func displayErrorMessage(_ message: String) {
+        
+    }
+    
+    func displayLoader(_ show: Bool) {
         DispatchQueue.main.async {
             if show {
                 self.activityView?.startAnimating()
@@ -78,7 +84,13 @@ class TopStoriesListView: UIView, TopStoriesListInterface {
                 self.activityView?.stopAnimating()
             }
         }
-        
     }
-
+    
+    func updateCell(at index: Int, with viewModel: StoryItemViewModel) {
+        DispatchQueue.main.async {
+            if let cell = self.tableViewStories.cellForRow(at: IndexPath(row: index, section: 0)) as? TopStoryCell {
+                cell.populate(with: viewModel)
+            }
+        }
+    }
 }

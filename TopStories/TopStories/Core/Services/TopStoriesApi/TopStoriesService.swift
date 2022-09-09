@@ -11,14 +11,12 @@ class TopStoriesService: TopStoriesServiceProtocol {
 
   
     private let client: HTTPClient
-    private let urlRequest: URLRequest
     
-    init(client: HTTPClient, urlRequest: URLRequest) {
+    init(client: HTTPClient) {
         self.client = client
-        self.urlRequest = urlRequest
     }
     
-    func fetch(completion: @escaping (Result<[StoryItem], TopStoryServiceError>) -> Void) {
+    func fetch(urlRequest: URLRequest, completion: @escaping (Result<[StoryItem], TopStoryServiceError>) -> Void) {
         client.perform(urlRequest: urlRequest) {[weak self] response in
             guard let self = self else {return}
             switch response {

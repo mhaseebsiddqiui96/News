@@ -22,8 +22,9 @@ class TopStoriesServiceTest: XCTestCase {
         
         let url = URL(string: "https://test1.com")!
         let (client, sut) = makeSUT(url: url)
+        let urlRequest = URLRequest(url: url)
         
-        sut.fetch(completion: {_ in })
+        sut.fetch(urlRequest: urlRequest, completion: {_ in })
         
         XCTAssertEqual(client.requestedURLs.first?.url, url)
     }
@@ -33,8 +34,9 @@ class TopStoriesServiceTest: XCTestCase {
         
         let url = URL(string: "https://test1.com")!
         let (client, sut) = makeSUT(url: url)
+        let urlRequest = URLRequest(url: url)
         
-        sut.fetch(completion: {_ in })
+        sut.fetch(urlRequest: urlRequest, completion: {_ in })
         
         XCTAssertEqual(client.requestURLsCount, 1)
     }
@@ -43,9 +45,10 @@ class TopStoriesServiceTest: XCTestCase {
         
         let url = URL(string: "https://test1.com")!
         let (client, sut) = makeSUT(url: url)
+        let urlRequest = URLRequest(url: url)
         
-        sut.fetch(completion: {_ in })
-        sut.fetch(completion: {_ in })
+        sut.fetch(urlRequest: urlRequest, completion: {_ in })
+        sut.fetch(urlRequest: urlRequest, completion: {_ in })
         
         XCTAssertEqual(client.requestURLsCount, 2)
     }
@@ -67,7 +70,7 @@ class TopStoriesServiceTest: XCTestCase {
         
         sampleErrorCodes.enumerated().forEach({ index, code in
             
-            let model1JSON = StoryItem(id: UUID(), section: "Home", subsection: "Home-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType1", updatedDate: nil, createdDate: nil, publishedDate: nil, multimedia: []).makeJSON()
+            let model1JSON = StoryItem(id: UUID(), section: "Home", subsection: "Home-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType1", multimedia: []).makeJSON()
             
             let data = try! JSONSerialization.data(withJSONObject: model1JSON)
             
@@ -106,10 +109,10 @@ class TopStoriesServiceTest: XCTestCase {
     func test_fetch_deliversListOfStoriesOn200StatusCodeWithValidJSON() throws {
         let (client, sut) = makeSUT()
         
-        let model1 = StoryItem(id: UUID(), section: "Home", subsection: "Home-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType1", updatedDate: nil, createdDate: nil, publishedDate: nil, multimedia: [])
+        let model1 = StoryItem(id: UUID(), section: "Home", subsection: "Home-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType1", multimedia: [])
         let model1JSON = model1.makeJSON()
         
-        let model2 = StoryItem(id: UUID(), section: "News", subsection: "News-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType2", updatedDate: nil, createdDate: nil, publishedDate: nil, multimedia: [])
+        let model2 = StoryItem(id: UUID(), section: "News", subsection: "News-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType2", multimedia: [])
         let model2JSON = model2.makeJSON()
         
         expect(sut, toCompleteWith: .success([model1, model2])) {
@@ -121,44 +124,12 @@ class TopStoriesServiceTest: XCTestCase {
     
     
     // MARK: - Helpers
-    class HTTPClientSpy: HTTPClient {
-        
-        var requestedURLs: [URLRequest] {
-            return performRequestInputs.map({$0.0})
-        }
-        
-        var requestURLsCount: Int {
-            return performRequestInputs.count
-        }
-        
-        var performRequestInputs: [(urlRequest: URLRequest,
-                                    completion: (HTTPClientResult) -> Void)] = []
-        
-        func perform(urlRequest: URLRequest, completion: @escaping (HTTPClientResult) -> Void) {
-            performRequestInputs.append((urlRequest, completion))
-        }
-        
-        func fail(with error: Error, at index: Int = 0) {
-            performRequestInputs[index].completion(.failure(error))
-        }
-        
-        func success(with statusCode: Int, and data: Data = Data(), at index: Int = 0) {
-            let url = performRequestInputs[index].urlRequest.url!
-            let response = HTTPURLResponse(url: url,
-                                           statusCode: statusCode,
-                                           httpVersion: nil,
-                                           headerFields: nil)
-            
-            
-            performRequestInputs[index].completion(.success((data: data, response: response!)))
-        }
-        
-    }
+   
     
     // factory method to create sut. it will help if the creation of changes then we only need to update this method rest of the test will not be effected
     func makeSUT(url: URL = URL(string: "https://some-url.com")!) -> (client: HTTPClientSpy, service: TopStoriesService) {
         let client = HTTPClientSpy()
-        let sut = TopStoriesService(client: client, urlRequest: URLRequest(url: url))
+        let sut = TopStoriesService(client: client)
         
         return (client, sut)
     }
@@ -171,8 +142,8 @@ class TopStoriesServiceTest: XCTestCase {
                 line: UInt = #line) {
         
         var receivedResult: [Result<[StoryItem], TopStoryServiceError>] = []
-        
-        sut.fetch { response in
+        let req = URLRequest(url: URL(string: "https://some-url.com")!)
+        sut.fetch(urlRequest: req) { response in
             switch response {
             case .success(let item):
                 receivedResult.append(.success(item))
@@ -191,12 +162,53 @@ class TopStoriesServiceTest: XCTestCase {
 extension StoryItem {
     // any increase them in future
     func makeJSON() -> [String: Any] {
-        let dict = [
+        let dict: [String: Any] = [
             "id": self.id.uuidString,
             "section": self.section,
+            "subsection": self.subsection,
             "title": self.title,
-            "item_type": self.itemType
+            "item_type": self.itemType,
+            "abstract": self.abstract,
+            "url": self.url,
+            "uri": self.uri,
+            "multimedia": self.multimedia,
+            "byline": self.byline
         ].compactMapValues({$0})
         return dict
     }
+}
+
+class HTTPClientSpy: HTTPClient {
+    
+    var requestedURLs: [URLRequest] {
+        return performRequestInputs.map({$0.0})
+    }
+    
+    var requestURLsCount: Int {
+        return performRequestInputs.count
+    }
+    
+    var performRequestInputs: [(urlRequest: URLRequest,
+                                completion: (HTTPClientResult) -> Void)] = []
+    
+    func perform(urlRequest: URLRequest, completion: @escaping (HTTPClientResult) -> Void) -> URLSessionDataTask {
+        performRequestInputs.append((urlRequest, completion))
+        return URLSessionDataTask()
+    }
+    
+    func fail(with error: Error, at index: Int = 0) {
+        performRequestInputs[index].completion(.failure(error))
+    }
+    
+    func success(with statusCode: Int, and data: Data = Data(), at index: Int = 0) {
+        let url = performRequestInputs[index].urlRequest.url!
+        let response = HTTPURLResponse(url: url,
+                                       statusCode: statusCode,
+                                       httpVersion: nil,
+                                       headerFields: nil)
+        
+        
+        performRequestInputs[index].completion(.success((data: data, response: response!)))
+    }
+    
 }

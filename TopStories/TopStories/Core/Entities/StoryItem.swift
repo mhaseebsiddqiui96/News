@@ -18,9 +18,6 @@ struct StoryItem: Equatable {
     let uri: String?
     let byline: String?
     let itemType: String?
-    let updatedDate: Date?
-    let createdDate: Date?
-    let publishedDate: Date?
     let multimedia: [Multimedia]?
 
     

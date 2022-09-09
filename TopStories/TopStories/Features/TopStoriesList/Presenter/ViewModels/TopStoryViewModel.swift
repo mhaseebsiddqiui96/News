@@ -15,6 +15,7 @@ struct StoryItemViewModel: Equatable {
     let imageURL: URL? // it can be nill
     let title: String
     let author: String
+    var imgData: Data?
     var didTap: () -> Void
 }
 

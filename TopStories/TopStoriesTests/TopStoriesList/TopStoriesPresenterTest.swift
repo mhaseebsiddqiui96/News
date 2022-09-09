@@ -11,7 +11,7 @@ import XCTest
 class TopStoriesPresentTest: XCTestCase {
 
     func test_presentListOfStories_notifiesViewWithListOfViewModels() throws {
-        let (view, _, _, presenter) = makeSUT()
+        let (view, _, _ , _, presenter) = makeSUT()
         
         let stories = getDummyStories()
         
@@ -27,7 +27,7 @@ class TopStoriesPresentTest: XCTestCase {
     
     
     func test_viewModelSelection_notifiesRouterWithEntity() throws {
-        let (view, _, router, presenter) = makeSUT()
+        let (view, _, _, router, presenter) = makeSUT()
         
         let stories = getDummyStories()
         
@@ -40,7 +40,7 @@ class TopStoriesPresentTest: XCTestCase {
     }
     
     func test_presentInvalidDataError_notifiesViewWithErrorMessage() throws {
-        let (view, _, _, presenter) = makeSUT()
+        let (view, _, _, _, presenter) = makeSUT()
 
         presenter.presentError(.invalidData)
         XCTAssertEqual(view.displayErrorMessage, [TopStoryServiceError.invalidData.localizedDescription])
@@ -49,7 +49,7 @@ class TopStoriesPresentTest: XCTestCase {
     }
 
     func test_presentConnctivityError_notifiesViewWithErrorMessage() throws {
-        let (view, _, _, presenter) = makeSUT()
+        let (view, _,_, _, presenter) = makeSUT()
 
         presenter.presentError(.internetConnectivity)
         XCTAssertEqual(view.displayErrorMessage, [TopStoryServiceError.internetConnectivity.localizedDescription])
@@ -58,7 +58,7 @@ class TopStoriesPresentTest: XCTestCase {
     }
 
     func test_presentAuthError_notifiesViewWithErrorMessage() throws {
-        let (view, _, _, presenter) = makeSUT()
+        let (view, _, _, _, presenter) = makeSUT()
 
         presenter.presentError(.unAuthorized)
         XCTAssertEqual(view.displayErrorMessage, [TopStoryServiceError.unAuthorized.localizedDescription])
@@ -67,7 +67,7 @@ class TopStoriesPresentTest: XCTestCase {
     }
     
     func test_viewLoaded_notifierViewForLoaderAndInteractorToGetStories() {
-        let (view, interactor, _, presenter) = makeSUT()
+        let (view, interactor, _, _, presenter) = makeSUT()
         presenter.viewLoaded()
         
         XCTAssertEqual(view.displayLoader, [true])
@@ -76,6 +76,7 @@ class TopStoriesPresentTest: XCTestCase {
 
     //MARK: - Helpers
     class TopStoriesListViewSpy: TopStoriesListViewProtocol {
+       
      
         var presenter: TopStoriesListPresenterProtocol?
         var listOfStoriesViewModel: [StoryItemViewModel] = []
@@ -94,6 +95,11 @@ class TopStoriesPresentTest: XCTestCase {
         func displayLoader(_ show: Bool) {
             displayLoader.append(show)
         }
+        
+        func updateCell(at index: Int, with viewModel: StoryItemViewModel) {
+            
+        }
+        
         
     }
     
@@ -115,21 +121,35 @@ class TopStoriesPresentTest: XCTestCase {
         }
     }
     
-    func makeSUT() -> (view: TopStoriesListViewSpy, interactor: TopStoriesListInteractorSpy, router: TopStoriesListRouterSpy, presenter: TopStoriesListPresenter) {
+    class ListImageDataLoadingSpy: ListImageDataLoadingInteractorProtocol {
+        func loadImageData(at index: Int, for url: URL) {
+            
+        }
+        
+        func cancelLoad(at index: Int) {
+            
+        }
+        
+    }
+
+    
+    func makeSUT() -> (view: TopStoriesListViewSpy, interactor: TopStoriesListInteractorSpy, listImageLoadingInteractor: ListImageDataLoadingSpy, router: TopStoriesListRouterSpy, presenter: TopStoriesListPresenter) {
         let view = TopStoriesListViewSpy()
         let interactor = TopStoriesListInteractorSpy()
         let router = TopStoriesListRouterSpy()
+        let interactorImageList = ListImageDataLoadingSpy()
         let presenter = TopStoriesListPresenter(interface: view,
                                                 interactor: interactor,
+                                                listImageLoadingInteractor: interactorImageList,
                                                 router: router)
-        return (view, interactor, router, presenter)
+        return (view, interactor, interactorImageList, router, presenter)
     }
     
     func getDummyStories() -> [StoryItem] {
         let stories = [
-            StoryItem(id: UUID(), section: "Home1", subsection: "Something1", title: "StoryTitle1", abstract: nil, url: nil, uri: nil, byline: "by Siddiqui", itemType: nil, updatedDate: nil, createdDate: nil, publishedDate: nil, multimedia: [StoryItem.Multimedia(url: "https://some-url2.com", format: .largeThumbnail, height: 300, width: 300, type: nil, subtype: nil, caption: nil, copyright: nil)]),
+            StoryItem(id: UUID(), section: "Home1", subsection: "Something1", title: "StoryTitle1", abstract: nil, url: nil, uri: nil, byline: "by Siddiqui", itemType: nil, multimedia: [StoryItem.Multimedia(url: "https://some-url2.com", format: .largeThumbnail, height: 300, width: 300, type: nil, subtype: nil, caption: nil, copyright: nil)]),
             
-            StoryItem(id: UUID(), section: "Home2", subsection: "Something2", title: "StoryTitle2", abstract: nil, url: nil, uri: nil, byline: "by Haseeb", itemType: nil, updatedDate: nil, createdDate: nil, publishedDate: nil, multimedia: [StoryItem.Multimedia(url: "https://some-url.com", format: .largeThumbnail, height: 300, width: 300, type: nil, subtype: nil, caption: nil, copyright: nil)])
+            StoryItem(id: UUID(), section: "Home2", subsection: "Something2", title: "StoryTitle2", abstract: nil, url: nil, uri: nil, byline: "by Haseeb", itemType: nil, multimedia: [StoryItem.Multimedia(url: "https://some-url.com", format: .largeThumbnail, height: 300, width: 300, type: nil, subtype: nil, caption: nil, copyright: nil)])
         ]
         
         return stories
