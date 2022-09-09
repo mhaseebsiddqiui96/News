@@ -12,7 +12,7 @@ class ImageDataLoaderInteractorTest: XCTestCase {
 
     func test_loadImageData_deliversDataFromStore() throws {
         let dataStore = DataStoreStub()
-        let service = Service()
+        let service = ServiceSpy()
         let sut = CachedImageLoadingService(dataStore: dataStore, serivce: service)
         
         let url = URL(string: "https://some-url.com")!
@@ -36,7 +36,7 @@ class ImageDataLoaderInteractorTest: XCTestCase {
     
     func test_loadImageData_deliversDataFromService() throws {
         let dataStore = DataStoreStub()
-        let service = Service()
+        let service = ServiceSpy()
         let sut = CachedImageLoadingService(dataStore: dataStore, serivce: service)
         
         let url = URL(string: "https://some-url.com")!
@@ -59,7 +59,7 @@ class ImageDataLoaderInteractorTest: XCTestCase {
 
     func test_loadImageData_deliversErrorFromService() throws {
         let dataStore = DataStoreStub()
-        let service = Service()
+        let service = ServiceSpy()
         let sut = CachedImageLoadingService(dataStore: dataStore, serivce: service)
         
         let url = URL(string: "https://some-url.com")!
@@ -99,7 +99,7 @@ class ImageDataLoaderInteractorTest: XCTestCase {
         
     }
     
-    class Service: ImageLoaderSerivceProtocol {
+    class ServiceSpy: ImageLoaderSerivceProtocol {
        
         
         var completions: [(Result<Data, Error>) -> Void] = []
