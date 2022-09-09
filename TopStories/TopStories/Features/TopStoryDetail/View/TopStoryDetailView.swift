@@ -84,7 +84,7 @@ class TopStoryDetailView: TopStoryDetailInterfaceView {
     
     lazy var seeMoreButton: UIButton = {
         let button = UIButton()
-        button.setTitle("See More", for: .normal)
+        button.setTitle(LocalizedStrings.seeMoreButtonTitle.localized, for: .normal)
         button.backgroundColor = .systemBlue
         button.setTitleColor(.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false

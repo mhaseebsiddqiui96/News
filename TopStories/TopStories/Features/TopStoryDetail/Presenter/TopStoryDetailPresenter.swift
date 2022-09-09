@@ -15,8 +15,8 @@ class TopStoryDetailPresenter: TopStoryDetailPresenterProtocol, TopStoryDetailIn
     
     //view state
     var storyDetailViewModel: StoryDetailViewModel?
-    var title: String = Constants.StoryDetailsStrings.navTitle
-
+    var title: String = LocalizedStrings.storyDetailTitle.localized
+    
     init(interface: TopStoryDetailViewProtocol, interactor: TopStoryDetailInteractorInputProtocol?, router: TopStoryDetailWireframeProtocol) {
         self.view = interface
         self.interactor = interactor

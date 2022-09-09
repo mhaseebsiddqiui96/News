@@ -13,12 +13,4 @@ struct Constants {
         static let newYorkTimeApiKey = "zir2gnpsJpBkjwlsrh2fknSjGWjwfBE2"
     }
     
-    // this should be to some localized file, no time :(
-    struct TopStoriesListStrings {        
-        static let navTitle: String = "#Top Stories"
-    }
-    
-    struct StoryDetailsStrings {
-        static let navTitle: String = "Story Details"
-    }
 }

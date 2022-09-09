@@ -1,0 +1,12 @@
+/* 
+  Localized.strings
+  TopStories
+
+  Created by Muhammad Haseeb Siddiqui on 9/9/22.
+  
+*/
+
+
+"story_list_title" = "#Top Stories";
+"story_detail_title" = "Story Details";
+"see_more_button_title" = "See More";

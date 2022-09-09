@@ -16,7 +16,7 @@ class TopStoriesListPresenter: TopStoriesListPresenterProtocol {
     private let router: TopStoriesListWireframeProtocol
         
     // View Representation
-    var title: String = Constants.TopStoriesListStrings.navTitle
+    var title: String = LocalizedStrings.storyListTitle.localized
     let selectedSection: String = "home" // sending home as fixed for now but can be replaces with enum case in future and user can select this option
     var topStories: [StoryItemViewModel] = []
 
