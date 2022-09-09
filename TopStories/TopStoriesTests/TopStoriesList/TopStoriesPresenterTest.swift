@@ -16,24 +16,24 @@ class TopStoriesPresentTest: XCTestCase {
         let stories = getDummyStories()
         
         presenter.presentListOfStories(stories)
-        XCTAssertEqual(view.listOfStoriesViewModel, [
+        
+        XCTAssertEqual(view.displayTopStoriesCalledCount, 1)
+        XCTAssertEqual(presenter.topStories, [
             StoryItemViewModel(imageURL: URL(string: "https://some-url2.com")!, title: "StoryTitle1", author: "by Siddiqui", didTap: {}),
             StoryItemViewModel(imageURL: URL(string: "https://some-url.com")!, title: "StoryTitle2", author: "by Haseeb", didTap: {})
         ])
-        
         XCTAssertEqual(view.displayLoader, [false])
         
     }
     
     
     func test_viewModelSelection_notifiesRouterWithEntity() throws {
-        let (view, _, _, router, presenter) = makeSUT()
+        let (_, _, _, router, presenter) = makeSUT()
         
         let stories = getDummyStories()
         
         presenter.presentListOfStories(stories)
-        
-        view.listOfStoriesViewModel[0].didTap()
+        presenter.topStories[0].didTap()
        
         XCTAssertEqual(router.entities, [stories[0]])
         
@@ -79,13 +79,13 @@ class TopStoriesPresentTest: XCTestCase {
        
      
         var presenter: TopStoriesListPresenterProtocol?
-        var listOfStoriesViewModel: [StoryItemViewModel] = []
+        var displayTopStoriesCalledCount = 0
         var displayErrorMessage: [String] = []
         var displayLoader: [Bool] = []
         
         
-        func displayTopStories(_ viewModel: [StoryItemViewModel]) {
-            listOfStoriesViewModel.append(contentsOf: viewModel)
+        func displayTopStories() {
+            displayTopStoriesCalledCount += 1
         }
         
         func displayErrorMessage(_ message: String) {

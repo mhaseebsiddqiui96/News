@@ -66,7 +66,7 @@ class TopStoriesListView: UIView, TopStoriesListInterface, TopStoriesListViewPro
     }
 
     //Presenter -> View
-    func displayTopStories(_ viewModel: [StoryItemViewModel]) {
+    func displayTopStories() {
         DispatchQueue.main.async {
             self.tableViewStories.reloadData()
         }

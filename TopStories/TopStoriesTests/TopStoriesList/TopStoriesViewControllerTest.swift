@@ -25,7 +25,7 @@ class TopStoriesViewControllerTest: XCTestCase {
     func test_displayListOfStories_notifiesViewToReloadData() throws {
         let (view, _ , sut) = makeSUT()
         _ = sut.view
-        view.displayTopStories([])
+        view.displayTopStories()
         XCTAssertEqual(view.reloadStoriesCalledCount, 1)
     }
     
@@ -48,7 +48,7 @@ class TopStoriesViewControllerTest: XCTestCase {
             StoryItemViewModel(imageURL: URL(string: "https://some-url2.com")!, title: "title2", author: "author2", didTap: {})
         ]
 
-        view.displayTopStories([])
+        view.displayTopStories()
         XCTAssertEqual(view.tableViewStories.numberOfCells(), 2)
         XCTAssertEqual(view.tableViewStories.cell(for: 0)?.storyTitleLabel.text, "title1")
         XCTAssertEqual(view.tableViewStories.cell(for: 0)?.storyAuthorLabel.text, "author1")
@@ -64,7 +64,7 @@ class TopStoriesViewControllerTest: XCTestCase {
             StoryItemViewModel(imageURL: URL(string: "https://some-url2.com")!, title: "title2", author: "author2", didTap: {didTapForViewModel = "vm2"})
         ]
 
-        view.displayTopStories([])
+        view.displayTopStories()
         
         view.tableViewStories.didSelectRow(at: 0)
         XCTAssertEqual(didTapForViewModel, "vm1")
@@ -89,8 +89,8 @@ class TopStoriesViewControllerTest: XCTestCase {
             activityIndicator.append(show)
         }
 
-        override func displayTopStories(_ viewModel: [StoryItemViewModel]) {
-            super.displayTopStories(viewModel)
+        override func displayTopStories() {
+            super.displayTopStories()
             reloadStoriesCalledCount += 1
         }
         

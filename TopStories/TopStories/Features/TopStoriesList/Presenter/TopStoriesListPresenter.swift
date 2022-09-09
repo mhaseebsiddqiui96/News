@@ -59,7 +59,7 @@ extension TopStoriesListPresenter: TopStoriesListInteractorOutputProtocol {
                 self.router.routeToStoryDetail(with: item)
             }
         })
-        view?.displayTopStories(topStories)
+        view?.displayTopStories()
     }
     
     func presentError(_ error: TopStoryServiceError) {

@@ -51,7 +51,7 @@ protocol TopStoriesListPresenterProtocol: AnyObject {
 protocol TopStoriesListViewProtocol: AnyObject {
     
     /* Presenter -> ViewController */
-    func displayTopStories(_ viewModel: [StoryItemViewModel])
+    func displayTopStories()
     func displayErrorMessage(_ message: String)
     func displayLoader(_ show: Bool)
     
