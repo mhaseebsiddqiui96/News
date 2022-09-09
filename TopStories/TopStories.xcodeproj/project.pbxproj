@@ -384,7 +384,6 @@
 			isa = PBXGroup;
 			children = (
 				0FE57F0128C3777900874B3D /* AppDelegate.swift */,
-				0FE57F0F28C3777C00874B3D /* Info.plist */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -456,6 +455,7 @@
 				0FD3E5FB28C55535006E188D /* Core */,
 				0FE57F3728C3E04500874B3D /* Features */,
 				0FE57F0A28C3777C00874B3D /* Assets.xcassets */,
+				0FE57F0F28C3777C00874B3D /* Info.plist */,
 				0FE57F0C28C3777C00874B3D /* LaunchScreen.storyboard */,
 			);
 			path = TopStories;
