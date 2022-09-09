@@ -35,9 +35,8 @@ class TopStoriesViewControllerTest: XCTestCase {
         view.displayLoader(true)
         XCTAssertEqual(view.activityIndicator, [true])
         
-        view.activityIndicator.removeAll()
         view.displayLoader(false)
-        XCTAssertEqual(view.activityIndicator, [false])
+        XCTAssertEqual(view.activityIndicator, [true, false])
     }
     
     func test_displayListOfStories_rendersDataOnCell() throws {
@@ -72,6 +71,43 @@ class TopStoriesViewControllerTest: XCTestCase {
         view.tableViewStories.didSelectRow(at: 1)
         XCTAssertEqual(didTapForViewModel, "vm2")
     }
+    
+    func test_prefetchRows_notifiesPresenterToLoad() throws {
+        let (view, presenter, sut) = makeSUT()
+        _ = sut.view
+
+        presenter.topStories = [
+            StoryItemViewModel(imageURL: URL(string: "https://some-url1.com")!, title: "title1", author: "author1", didTap: {}),
+            StoryItemViewModel(imageURL: URL(string: "https://some-url2.com")!, title: "title2", author: "author2", didTap: {})
+        ]
+
+        view.displayTopStories()
+
+        view.tableViewStories.prefetchRow(at: 0)
+        XCTAssertEqual(presenter.loadImageCalled, [0])
+
+        view.tableViewStories.prefetchRow(at: 1)
+        XCTAssertEqual(presenter.loadImageCalled, [1])
+    }
+    
+    func test_canPrefetchRows_notifiesPresenterToCancelLoad() throws {
+        let (view, presenter, sut) = makeSUT()
+        _ = sut.view
+
+        presenter.topStories = [
+            StoryItemViewModel(imageURL: URL(string: "https://some-url1.com")!, title: "title1", author: "author1", didTap: {}),
+            StoryItemViewModel(imageURL: URL(string: "https://some-url2.com")!, title: "title2", author: "author2", didTap: {})
+        ]
+
+        view.displayTopStories()
+
+        view.tableViewStories.cancelPrefetchRow(at: 0)
+        XCTAssertEqual(presenter.loadImageCalled, [0])
+
+        view.tableViewStories.cancelPrefetchRow(at: 1)
+        XCTAssertEqual(presenter.loadImageCalled, [1])
+    }
+    
 
         
     //MARK: - Helpers
@@ -86,6 +122,7 @@ class TopStoriesViewControllerTest: XCTestCase {
 
 
         override func displayLoader(_ show: Bool) {
+            super.displayLoader(show)
             activityIndicator.append(show)
         }
 
@@ -116,6 +153,7 @@ class TopStoriesViewControllerTest: XCTestCase {
         
         
         var viewLoeadedCalledCount = 0
+        var loadImageCalled: [Int] = []
 
         var interactor: TopStoriesListInteractorInputProtocol?
         
@@ -128,11 +166,11 @@ class TopStoriesViewControllerTest: XCTestCase {
         }
         
         func loadImages(for indexs: [Int]) {
-            
+            loadImageCalled = indexs
         }
         
         func cancelLoads(for indexs: [Int]) {
-            
+            loadImageCalled = indexs
         }
         
     }
@@ -153,10 +191,19 @@ extension UITableView {
     }
     
     func cell(for row: Int) -> TopStoryCell? {
-        return self.dataSource?.tableView(self, cellForRowAt: IndexPath(row: row, section: 0)) as? TopStoryCell
+        let cell = self.dataSource?.tableView(self, cellForRowAt: IndexPath(row: row, section: 0)) as? TopStoryCell
+        return cell
     }
     
     func didSelectRow(at index: Int) {
         self.delegate?.tableView?(self, didSelectRowAt: IndexPath(row: index, section: 0))
+    }
+    
+    func prefetchRow(at index: Int) {
+        self.prefetchDataSource?.tableView(self, prefetchRowsAt: [IndexPath(row: index, section: 0)])
+    }
+    
+    func cancelPrefetchRow(at index: Int) {
+        self.prefetchDataSource?.tableView?(self, cancelPrefetchingForRowsAt: [IndexPath(row: index, section: 0)])
     }
 }

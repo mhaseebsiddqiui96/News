@@ -13,7 +13,7 @@ class TopStoryDetailPresenterTest: XCTestCase {
     func test_presentStoryDetail_notifiesViewWithListOfViewModels() throws {
         let (view, _, _, sut) = makeSUT()
        
-        let entity = StoryItem(id: UUID(), section: "section1", subsection: "subsection1", title: "title1", abstract: "abstract1", url: "https://some-url.com", uri: nil, byline: "by haseeb", itemType: nil, multimedia: [StoryItem.Multimedia(url: "https://some-url.com", format: .superJumbo, height: 0, width: 0, type: nil, subtype: nil, caption: nil, copyright: nil)])
+        let entity = getEntity()
         
         sut.presentStoryDetails(entity)
         
@@ -22,14 +22,38 @@ class TopStoryDetailPresenterTest: XCTestCase {
         XCTAssertEqual(view.displayStoryDetailViewModel[0].title, "title1")
         XCTAssertEqual(view.displayStoryDetailViewModel[0].description, "abstract1")
         XCTAssertEqual(view.displayStoryDetailViewModel[0].url, URL(string: "https://some-url.com"))
-   }
-    
+        XCTAssertNotNil(sut.storyDetailViewModel)
+    }
     
     func test_viewLoaded_notifierInteractorToGetStoryDetails() {
         let (_, interactor, _, presenter) = makeSUT()
         presenter.viewLoaded()
         
         XCTAssertEqual(interactor.getTopStoryDetailsCalled, 1)
+    }
+        
+        func test_presentImageData_notifiesView() throws {
+            let (view, _, _, presenter) = makeSUT()
+            let anyData = Data()
+            
+            presenter.storyDetailViewModel = StoryDetailViewModel(form: getEntity())
+            
+            
+            presenter.presentImageData(anyData)
+            
+            XCTAssertEqual(presenter.storyDetailViewModel?.imgData, anyData)
+            XCTAssertEqual(view.imgeData, [anyData])
+        }
+    
+    
+    func test_seeMoreTapped_routeToSeeMore() throws {
+        let (_, _, router, presenter) = makeSUT()
+        presenter.storyDetailViewModel = StoryDetailViewModel(form: getEntity())
+        
+        
+        presenter.seeMoreTapped()
+        
+        XCTAssertEqual(router.routeToSeemWithURL, [URL(string: "https://some-url.com")])
     }
 
 
@@ -38,13 +62,14 @@ class TopStoryDetailPresenterTest: XCTestCase {
        
         var presenter: TopStoryDetailPresenterProtocol?
         var displayStoryDetailViewModel = [StoryDetailViewModel]()
+        var imgeData = [Data]()
        
         func displayStoryDetails(_ viewModel: StoryDetailViewModel) {
             displayStoryDetailViewModel.append(viewModel)
         }
         
         func displayImage(_ data: Data) {
-            
+            imgeData.append(data)
         }
     
     }
@@ -59,8 +84,9 @@ class TopStoryDetailPresenterTest: XCTestCase {
     }
     
     class RouterSpy: TopStoryDetailWireframeProtocol {
+        var routeToSeemWithURL = [URL]()
         func routeToSeeMore(with URL: URL) {
-            
+            routeToSeemWithURL.append(URL)
         }
         
     }
@@ -76,6 +102,10 @@ class TopStoryDetailPresenterTest: XCTestCase {
         return (view, interactor, router, presenter)
     }
     
+            fileprivate func getEntity() -> StoryItem {
+                return StoryItem(id: UUID(), title: "title1", abstract: "abstract1", url: "https://some-url.com", byline: "by haseeb", multimedia: [StoryItem.Multimedia(url: "https://some-url.com", format: .superJumbo)])
+            }
+            
 
 
 }

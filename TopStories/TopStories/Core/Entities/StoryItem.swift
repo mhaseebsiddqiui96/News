@@ -10,14 +10,11 @@ import Foundation
 struct StoryItem: Equatable {
     
     let id: UUID
-    let section: String?
-    let subsection: String?
+  
     let title: String?
     let abstract: String?
     let url: String?
-    let uri: String?
     let byline: String?
-    let itemType: String?
     let multimedia: [Multimedia]?
 
     
@@ -25,17 +22,12 @@ struct StoryItem: Equatable {
     struct Multimedia: Equatable {
         let url : String?
         let format : Format?
-        let height : Int?
-        let width : Int?
-        let type : String?
-        let subtype : String?
-        let caption : String?
-        let copyright : String?
-        
-        enum Format {
+       
+        enum Format: String {
             case largeThumbnail
             case superJumbo
             case threeByTwoSmallAt2X
+            case mediumThreeByTwo440
         }
         
     }

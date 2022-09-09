@@ -70,7 +70,7 @@ class TopStoriesServiceTest: XCTestCase {
         
         sampleErrorCodes.enumerated().forEach({ index, code in
             
-            let model1JSON = StoryItem(id: UUID(), section: "Home", subsection: "Home-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType1", multimedia: []).makeJSON()
+            let model1JSON = StoryItem(id: UUID(), title: "Covid", abstract: nil, url: nil, byline: nil, multimedia: []).makeJSON()
             
             let data = try! JSONSerialization.data(withJSONObject: model1JSON)
             
@@ -109,10 +109,10 @@ class TopStoriesServiceTest: XCTestCase {
     func test_fetch_deliversListOfStoriesOn200StatusCodeWithValidJSON() throws {
         let (client, sut) = makeSUT()
         
-        let model1 = StoryItem(id: UUID(), section: "Home", subsection: "Home-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType1", multimedia: [])
+        let model1 = StoryItem(id: UUID(), title: "Covid", abstract: nil, url: nil, byline: nil, multimedia: [StoryItem.Multimedia(url: "https://some-url.com", format: .superJumbo)])
         let model1JSON = model1.makeJSON()
         
-        let model2 = StoryItem(id: UUID(), section: "News", subsection: "News-inner", title: "Covid", abstract: nil, url: nil, uri: nil, byline: nil, itemType: "itemType2", multimedia: [])
+        let model2 = StoryItem(id: UUID(), title: "Covid", abstract: nil, url: nil, byline: nil, multimedia: [StoryItem.Multimedia(url: "https://some-url.com", format: .largeThumbnail)])
         let model2JSON = model2.makeJSON()
         
         expect(sut, toCompleteWith: .success([model1, model2])) {
@@ -164,17 +164,36 @@ extension StoryItem {
     func makeJSON() -> [String: Any] {
         let dict: [String: Any] = [
             "id": self.id.uuidString,
-            "section": self.section,
-            "subsection": self.subsection,
             "title": self.title,
-            "item_type": self.itemType,
             "abstract": self.abstract,
             "url": self.url,
-            "uri": self.uri,
-            "multimedia": self.multimedia,
+            "multimedia": self.multimedia?.map({$0.makeJSON()}),
             "byline": self.byline
         ].compactMapValues({$0})
         return dict
+    }
+}
+
+extension StoryItem.Multimedia {
+    func makeJSON() -> [String: Any] {
+        let dict: [String: Any] = [
+            "url": self.url,
+            "format": self.mapper(format: self.format ?? .threeByTwoSmallAt2X)
+        ].compactMapValues({$0})
+        return dict
+    }
+    
+    func mapper(format: StoryItem.Multimedia.Format) -> String {
+        switch format {
+        case .superJumbo:
+            return "Super Jumbo"
+        case .largeThumbnail:
+            return "Large Thumbnail"
+        case .mediumThreeByTwo440:
+            return "mediumThreeByTwo440"
+        case .threeByTwoSmallAt2X:
+            return "threeByTwoSmallAt2X"
+        }
     }
 }
 

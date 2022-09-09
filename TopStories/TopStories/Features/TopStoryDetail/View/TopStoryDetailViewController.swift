@@ -42,6 +42,4 @@ class TopStoryDetailViewController: UIViewController {
             self?.presenter?.seeMoreTapped()
         }
     }
-    
-    
 }

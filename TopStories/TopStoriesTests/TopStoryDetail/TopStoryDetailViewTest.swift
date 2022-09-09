@@ -40,35 +40,5 @@ class TopStoryDetailViewTest: XCTestCase {
         XCTAssertEqual(view.storyAbstactLabel.text, "Hello work")
         
     }
-    
-    func test_viewDidLoad() throws {
-        let view = TopStoryDetailView()
-        let viewController = TopStoryDetailViewController(interface: view)
-        let presenter = PresenterSpy()
-        presenter.title = "Hello"
-        viewController.presenter = presenter
-        _ = viewController.view
-        
-        XCTAssertEqual(viewController.title, "Hello")
-        XCTAssertEqual(1, presenter.viewLoadedCalled)
-        
-    }
 
-    // MARK: - Helper
-    class PresenterSpy: TopStoryDetailPresenterProtocol {
-        
-        var interactor: TopStoryDetailInteractorInputProtocol?
-        var viewLoadedCalled = 0
-        var seeMoreTappedCalled = 0
-        
-        var title: String = ""
-        
-        func viewLoaded() {
-            viewLoadedCalled += 1
-        }
-        
-        func seeMoreTapped() {
-            seeMoreTappedCalled += 1
-        }
-    }
 }

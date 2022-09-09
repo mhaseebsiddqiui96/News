@@ -36,6 +36,7 @@ class TopStoriesListPresenter: TopStoriesListPresenterProtocol {
     
     func loadImages(for indexs: [Int]) {
         for index in indexs {
+            guard index < topStories.count else { return } //safe check to make sure app dont crash
             if let URL = topStories[index].imageURL {
                 self.listImageLoadingInteractor?.loadImageData(at: index, for: URL)
             }

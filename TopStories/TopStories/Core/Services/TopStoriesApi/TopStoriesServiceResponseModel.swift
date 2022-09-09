@@ -12,30 +12,42 @@ struct TopStoriesServiceResponse: Codable {
 
     struct Results : Codable {
         let id: String?
-        let section : String?
-        let subsection : String?
         let title : String?
         let abstract : String?
         let url : String?
-        let uri : String?
         let byline : String?
-        let item_type : String?
         let multimedia : [Multimedia]?
                 
         var storyItemMedia: [StoryItem.Multimedia]? {
             return multimedia?.map({$0.storyMultiMedia})
         }
         
+        enum CodingKeys: String, CodingKey {
+            case id
+            case title
+            case abstract
+            case url
+            case byline
+            case multimedia
+        }
+
+        init(from decoder: Decoder) throws {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            id = try? values.decodeIfPresent(String.self, forKey: .id)
+            title = try? values.decodeIfPresent(String.self, forKey: .title)
+            abstract = try? values.decodeIfPresent(String.self, forKey: .abstract)
+            url = try? values.decodeIfPresent(String.self, forKey: .url)
+            byline = try? values.decodeIfPresent(String.self, forKey: .byline)
+            multimedia = try? values.decodeIfPresent([Multimedia].self, forKey: .multimedia)
+        }
+        
         var storyItem: StoryItem {
             return StoryItem(id: UUID(uuidString: id ?? UUID().uuidString) ?? UUID(),
-                             section: section,
-                             subsection: subsection,
+
                              title: title,
                              abstract: abstract,
                              url: url,
-                             uri: uri,
                              byline: byline,
-                             itemType: item_type,
                              multimedia: storyItemMedia)
         }
 
@@ -43,16 +55,20 @@ struct TopStoriesServiceResponse: Codable {
         struct Multimedia : Codable {
             let url : String?
             let format : Format?
-            let height : Int?
-            let width : Int?
-            let type : String?
-            let subtype : String?
-            let caption : String?
-            let copyright : String?
-
-
+        
             var storyMultiMedia: StoryItem.Multimedia {
-                return StoryItem.Multimedia(url: url, format: format?.storyMediaFormat, height: height, width: width, type: type, subtype: subtype, caption: caption, copyright: copyright)
+                return StoryItem.Multimedia(url: url, format: format?.storyMediaFormat)
+            }
+
+            enum CodingKeys: String, CodingKey {
+                case url
+                case format
+            }
+
+            init(from decoder: Decoder) throws {
+                let values = try decoder.container(keyedBy: CodingKeys.self)
+                url = try? values.decodeIfPresent(String.self, forKey: .url)
+                format = try? values.decodeIfPresent(Format.self, forKey: .format)
             }
             
             
@@ -60,6 +76,7 @@ struct TopStoriesServiceResponse: Codable {
                 case largeThumbnail = "Large Thumbnail"
                 case superJumbo = "Super Jumbo"
                 case threeByTwoSmallAt2X = "threeByTwoSmallAt2X"
+                case mediumThreeByTwo440 = "mediumThreeByTwo440"
                 
                 var storyMediaFormat: StoryItem.Multimedia.Format {
                     switch self {
@@ -70,6 +87,9 @@ struct TopStoriesServiceResponse: Codable {
                         return .superJumbo
                     case .threeByTwoSmallAt2X:
                         return .threeByTwoSmallAt2X
+                    case .mediumThreeByTwo440:
+                        return .mediumThreeByTwo440
+                    
                     }
                 }
             }

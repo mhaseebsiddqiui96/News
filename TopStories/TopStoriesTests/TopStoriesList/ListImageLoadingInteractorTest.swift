@@ -22,19 +22,82 @@ class ListImageLoadingInteractorTest: XCTestCase {
         sut.loadImageData(at: 0, for: url)
         
         // assert
-        XCTAssertEqual(serviceSpy.loadImageCalled, [])
+        XCTAssertNil(serviceSpy.loadImageCalled[url])
         XCTAssertEqual(presenterSpy.presentImageDataCalled, [])
         
+    }
+    
+    func test_loadImageData_callServiceIfNoOngoingRequest_presentsImageDataOnSuccessFromService() throws {
+        let (sut, serviceSpy, presenterSpy) = makeSUT()
+
+        let url = URL(string: "https://some-url.com")!
+        
+        // test
+        sut.loadImageData(at: 0, for: url)
+        
+        //checking ongoing request is not nil
+        XCTAssertNotNil(sut.ongoingRequests[0])
+
+        // assert
+        XCTAssertNotNil(serviceSpy.loadImageCalled[url])
+        
+        let data = Data()
+        let expectedPresenterOutput = PresenterSpy.ImageCallBack(index: 0, url: url, data: data)
+        
+        // firing the completion handler
+        serviceSpy.loadImageCalled[url]?(.success(data))
+        
+        
+        // presenter should be fired
+        XCTAssertEqual(presenterSpy.presentImageDataCalled, [expectedPresenterOutput])
+        XCTAssertNil(sut.ongoingRequests[0])
+    }
+    
+    func test_loadImageData_callServiceIfNoOngoingRequest_presentsErrorOnFailureFromService() throws {
+        let (sut, serviceSpy, presenterSpy) = makeSUT()
+
+        let url = URL(string: "https://some-url.com")!
+        
+        // test
+        sut.loadImageData(at: 0, for: url)
+        
+        //checking ongoing request is not nil
+        XCTAssertNotNil(sut.ongoingRequests[0])
+        
+        // assert
+        XCTAssertNotNil(serviceSpy.loadImageCalled[url])
+                
+        let error = FakeError.fakeError
+        serviceSpy.loadImageCalled[url]?(.failure(error))
+        
+        XCTAssertEqual(presenterSpy.presentErrorCalled, [error.localizedDescription])
+        XCTAssertNil(sut.ongoingRequests[0])
+
+    }
+    
+    func test_cancelLoad_cancelSessionDataTask() throws {
+        
+        let (sut, _, _) = makeSUT()
+        
+        let (fakeDataTask, _) = FakeHTTPDataTask.create(string: "https://some-url.com")
+        sut.ongoingRequests[0] = fakeDataTask
+        
+        sut.cancelLoad(at: 0)
+        
+        XCTAssertEqual(fakeDataTask.cancelCalled, 1)
+        XCTAssertNil(sut.ongoingRequests[0])
+    
     }
  
     //MARK: - Helpers
     class ImageLoadingServiceSpy: ImageLoaderSerivceProtocol {
         
-        var loadImageCalled: [URL] = []
+        var loadImageCalled: [URL: (Result<Data, Error>) -> Void] = [:]
         
         func loadImageData(with url: URL, completion: @escaping (Result<Data, Error>) -> Void) -> URLSessionDataTask? {
-            loadImageCalled.append(url)
-            return nil
+            loadImageCalled[url] = completion
+            // I should mocked it but its too late now
+            return URLSessionDataTask()
         }
         
     }
@@ -46,13 +109,14 @@ class ListImageLoadingInteractorTest: XCTestCase {
             let data: Data
         }
         var presentImageDataCalled = [ImageCallBack]()
+        var presentErrorCalled = [String]()
         
         func presentImageData(at index: Int, having url: URL, with data: Data) {
             presentImageDataCalled.append(ImageCallBack(index: index, url: url, data: data))
         }
         
         func presentError(_ errMsg: String) {
-            
+            presentErrorCalled.append(errMsg)
         }
     }
     
@@ -84,4 +148,16 @@ class ListImageLoadingInteractorTest: XCTestCase {
         
         return (sut, serviceSpy, presenter)
     }
+    
+    enum FakeError: Swift.Error, LocalizedError {
+        case fakeError
+        
+        public var errorDescription: String? {
+            switch self {
+            case .fakeError:
+                return NSLocalizedString("Unable to connect to server!", comment: "")
+            }
+        }
+    }
+    
 }

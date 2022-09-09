@@ -63,6 +63,68 @@ class TopStoriesPresentTest: XCTestCase {
         presenter.presentError(.unAuthorized)
         XCTAssertEqual(router.errorView, [TopStoryServiceError.unAuthorized.localizedDescription])
         XCTAssertEqual(view.displayLoader, [false])
+    }
+    
+    func test_loadImageForIndexs_notifiesIneractorToLoadImages() throws {
+        let (_, _, interactor, _, presenter) = makeSUT()
+        
+        presenter.topStories = [
+            StoryItemViewModel(imageURL: URL(string: "https://some-url2.com")!, title: "StoryTitle1", author: "by Siddiqui", didTap: {}),
+            StoryItemViewModel(imageURL: URL(string: "https://some-url.com")!, title: "StoryTitle2", author: "by Haseeb", didTap: {})
+        ]
+        presenter.loadImages(for: [0, 1])
+        
+        XCTAssertEqual(interactor.loadImageCalled[0], URL(string: "https://some-url2.com")!)
+        XCTAssertEqual(interactor.loadImageCalled[1], URL(string: "https://some-url.com")!)
+        
+        presenter.loadImages(for: [2]) // safe check to see app dont crash
+        XCTAssertNil(interactor.loadImageCalled[2])
+
+    }
+    
+    func test_CancelImageLoadForIndexs_notifiesIneractorToCancelLoad() throws {
+        let (_, _, interactor, _, presenter) = makeSUT()
+        
+        presenter.topStories = [
+            StoryItemViewModel(imageURL: URL(string: "https://some-url2.com")!, title: "StoryTitle1", author: "by Siddiqui", didTap: {}),
+            StoryItemViewModel(imageURL: URL(string: "https://some-url.com")!, title: "StoryTitle2", author: "by Haseeb", didTap: {})
+        ]
+        presenter.cancelLoads(for: [0, 1])
+        
+        XCTAssertEqual(interactor.cancenlImageCalled, [0, 1])
+
+    }
+    
+    func test_presentImageData_notifiesViewToUpdateCell() throws {
+        let (view, _, _, _, presenter) = makeSUT()
+
+        let url = URL(string: "https://some-url.com")!
+        presenter.topStories = [StoryItemViewModel(imageURL: url, title: "title1", author: "author1", imgData: nil, didTap: {})]
+        
+        let anyData = Data()
+        presenter.presentImageData(at: 0, having: url, with: anyData)
+        
+        var expectedViewModel = presenter.topStories[0]
+        expectedViewModel.imgData = anyData
+        
+        XCTAssertEqual(view.updateCellsCalled[0], expectedViewModel)
+        
+        presenter.presentImageData(at: 1, having: url, with: anyData)
+        XCTAssertNil(view.updateCellsCalled[1]) // safe checking for crash index bound
+    }
+    
+    func test_presentImageData_updatesItsOwnViewModel() throws {
+        let (_, _, _, _, presenter) = makeSUT()
+
+        let url = URL(string: "https://some-url.com")!
+        presenter.topStories = [StoryItemViewModel(imageURL: url, title: "title1", author: "author1", imgData: nil, didTap: {})]
+        
+        let anyData = Data()
+        presenter.presentImageData(at: 0, having: url, with: anyData)
+       
+        XCTAssertEqual(presenter.topStories[0].imgData, anyData)
+        
+        presenter.presentImageData(at: 1, having: url, with: anyData) // to make app crash in test if somehow condition is missed on presenter
 
     }
     
@@ -82,6 +144,7 @@ class TopStoriesPresentTest: XCTestCase {
         var displayTopStoriesCalledCount = 0
         var displayErrorMessage: [String] = []
         var displayLoader: [Bool] = []
+        var updateCellsCalled = [Int: StoryItemViewModel]()
         
         
         func displayTopStories() {
@@ -97,10 +160,8 @@ class TopStoriesPresentTest: XCTestCase {
         }
         
         func updateCell(at index: Int, with viewModel: StoryItemViewModel) {
-            
+            updateCellsCalled[index] = viewModel
         }
-        
-        
     }
     
     class TopStoriesListInteractorSpy: TopStoriesListInteractorInputProtocol {
@@ -127,12 +188,16 @@ class TopStoriesPresentTest: XCTestCase {
     }
     
     class ListImageDataLoadingSpy: ListImageDataLoadingInteractorProtocol {
+        
+        var loadImageCalled = [Int: URL]()
+        var cancenlImageCalled = [Int]()
+        
         func loadImageData(at index: Int, for url: URL) {
-            
+            loadImageCalled[index] = url
         }
         
         func cancelLoad(at index: Int) {
-            
+            cancenlImageCalled.append(index)
         }
         
     }
@@ -152,9 +217,9 @@ class TopStoriesPresentTest: XCTestCase {
     
     func getDummyStories() -> [StoryItem] {
         let stories = [
-            StoryItem(id: UUID(), section: "Home1", subsection: "Something1", title: "StoryTitle1", abstract: nil, url: nil, uri: nil, byline: "by Siddiqui", itemType: nil, multimedia: [StoryItem.Multimedia(url: "https://some-url2.com", format: .largeThumbnail, height: 300, width: 300, type: nil, subtype: nil, caption: nil, copyright: nil)]),
+            StoryItem(id: UUID(), title: "StoryTitle1", abstract: "something", url: nil, byline: "by Siddiqui", multimedia: [StoryItem.Multimedia(url: "https://some-url2.com", format: .largeThumbnail)]),
             
-            StoryItem(id: UUID(), section: "Home2", subsection: "Something2", title: "StoryTitle2", abstract: nil, url: nil, uri: nil, byline: "by Haseeb", itemType: nil, multimedia: [StoryItem.Multimedia(url: "https://some-url.com", format: .largeThumbnail, height: 300, width: 300, type: nil, subtype: nil, caption: nil, copyright: nil)])
+            StoryItem(id: UUID(), title: "StoryTitle2", abstract: "some", url: nil, byline: "by Haseeb", multimedia: [StoryItem.Multimedia(url: "https://some-url.com", format: .largeThumbnail)])
         ]
         
         return stories

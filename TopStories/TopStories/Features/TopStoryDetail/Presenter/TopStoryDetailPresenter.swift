@@ -40,9 +40,8 @@ class TopStoryDetailPresenter: TopStoryDetailPresenterProtocol, TopStoryDetailIn
     }
     
     func presentImageData(_ data: Data) {
-        var viewModel = storyDetailViewModel
-        viewModel?.imgData = data
-        storyDetailViewModel = viewModel
+        
+        storyDetailViewModel?.imgData = data
         view?.displayImage(data)
     }
     

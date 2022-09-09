@@ -20,10 +20,7 @@ class TopStoriesListInteractorTest: XCTestCase {
     }
     
     func test_getTopStories_notifiesPresenterWithConectivityError_whenReceivesConnectivityErrorFromSerivce() throws {
-        let service = TopStoriesServiceSpy()
-        let presenter = PresenterSpy()
-        let sut = TopStoriesListInteractor(service: service)
-        sut.presenter = presenter
+        let (sut, presenter, service) = makeSUT()
         
         sut.getTopStoriesList(for: "Home")
         service.complete(with: .failure(.internetConnectivity))
@@ -32,10 +29,8 @@ class TopStoriesListInteractorTest: XCTestCase {
     }
     
     func test_getTopStories_notifiesPresenterWithInvalidDataError_whenReceivesInvalidDataErrorFromSerivce() throws {
-        let service = TopStoriesServiceSpy()
-        let presenter = PresenterSpy()
-        let sut = TopStoriesListInteractor(service: service)
-        sut.presenter = presenter
+        let (sut, presenter, service) = makeSUT()
+
         
         sut.getTopStoriesList(for: "Home")
         service.complete(with: .failure(.invalidData))
@@ -45,11 +40,8 @@ class TopStoriesListInteractorTest: XCTestCase {
     
     
     func test_getTopStories_notifiesPresenterWithAuthError_whenReceivesAuthErrorFromSerivce() throws {
-        let service = TopStoriesServiceSpy()
-        let presenter = PresenterSpy()
-        let sut = TopStoriesListInteractor(service: service)
-        sut.presenter = presenter
-        
+        let (sut, presenter, service) = makeSUT()
+
         sut.getTopStoriesList(for: "Home")
         service.complete(with: .failure(.unAuthorized))
         
@@ -58,14 +50,12 @@ class TopStoriesListInteractorTest: XCTestCase {
     
     
     func test_getTopStories_notifiesPresenterWithTopNews_whenReceivesNewsFromSerivce() throws {
-        let service = TopStoriesServiceSpy()
-        let presenter = PresenterSpy()
-        let sut = TopStoriesListInteractor(service: service)
+        let (sut, presenter, service) = makeSUT()
         
         let expectedStories = [
-            StoryItem(id: UUID(), section: "Home1", subsection: "Something1", title: nil, abstract: nil, url: nil, uri: nil, byline: nil, itemType: nil, multimedia: nil),
+            StoryItem(id: UUID(), title: nil, abstract: nil, url: nil, byline: nil, multimedia: nil),
             
-            StoryItem(id: UUID(), section: "Home2", subsection: "Something2", title: nil, abstract: nil, url: nil, uri: nil, byline: nil, itemType: nil, multimedia: nil)
+            StoryItem(id: UUID(), title: nil, abstract: nil, url: nil, byline: nil, multimedia: nil)
         ]
         sut.presenter = presenter
         
@@ -103,6 +93,14 @@ class TopStoriesListInteractorTest: XCTestCase {
         func presentError(_ error: TopStoryServiceError) {
             receievedError.append(error)
         }
+    }
+    
+    func makeSUT() -> (TopStoriesListInteractor, PresenterSpy, TopStoriesServiceSpy) {
+        let service = TopStoriesServiceSpy()
+        let presenter = PresenterSpy()
+        let sut = TopStoriesListInteractor(service: service)
+        sut.presenter = presenter
+        return (sut, presenter, service)
     }
     
 }
