@@ -1,5 +1,5 @@
 # EGYM
-Coding assignment for EGYM
+Coding assignment
 
 # Architecture
 I have used viper in my app for both modules
